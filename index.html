@@ -6,7 +6,7 @@
     <title>إدارة السلف الذكية - Pro</title>
     <!-- خط Tajawal الفاخر -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <!-- أيقونات FontAwesome Pro -->
+    <!-- أيقونات FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -40,7 +40,6 @@
             padding-bottom: 50px;
         }
 
-        /* شاشات التنقل */
         .screen {
             display: none;
         }
@@ -48,7 +47,6 @@
             display: block;
         }
 
-        /* رأس الصفحة */
         header {
             display: flex;
             justify-content: space-between;
@@ -84,9 +82,9 @@
             align-items: center;
             gap: 6px;
             margin-bottom: 12px;
+            padding: 6px 0;
         }
 
-        /* لوحة الإحصائيات المالية */
         .dashboard-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -136,7 +134,6 @@
             border-radius: 5px;
         }
 
-        /* البطاقات العامة */
         .card {
             background: var(--ios-card);
             border-radius: var(--radius);
@@ -161,7 +158,6 @@
             font-size: 18px;
         }
 
-        /* نماذج الإدخال */
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -225,7 +221,6 @@
         .btn-warning { background-color: var(--ios-warning); }
         .btn-danger { background-color: var(--ios-danger); }
 
-        /* بطاقة اختيار السلفة أو إنشاء سلفة */
         .choice-card {
             background: var(--ios-card);
             border-radius: var(--radius);
@@ -256,7 +251,6 @@
             color: var(--ios-text-secondary);
         }
 
-        /* قائمة السلف الموجودة */
         .solfa-item {
             background: #FAFAFC;
             border: 1px solid var(--ios-border);
@@ -284,7 +278,6 @@
             color: var(--ios-text-secondary);
         }
 
-        /* قائمة المشتركين الاحترافية */
         .member-item {
             display: flex;
             justify-content: space-between;
@@ -349,7 +342,6 @@
 
         .icon-btn:hover { color: var(--ios-danger); }
 
-        /* قسم القرعة المتطور */
         .draw-box {
             text-align: center;
             background: linear-gradient(135deg, #007AFF 0%, #0051A8 100%);
@@ -394,7 +386,7 @@
 </head>
 <body>
 
-    <!-- ================= الشاشة الأولى: اختيار أو إنشاء سلفة ================= -->
+    <!-- الشاشة الأولى: الاختيار -->
     <div id="homeScreen" class="screen active">
         <header>
             <h1><i class="fa-solid fa-vault" style="color: var(--ios-primary);"></i> نظام السلف الشامل</h1>
@@ -404,7 +396,7 @@
         <div class="choice-card" onclick="showCreateScreen()">
             <i class="fa-solid fa-circle-plus"></i>
             <h3>إنشاء سلفة جديدة</h3>
-            <p>قم بإنشاء صندوق سلفة جديد، حدد المبلغ الإجمالي وقسط كل شخص</p>
+            <p>إنشاء صندوق سلفة جديد، وتحديد إجمالي المبلغ وقسط كل شخص</p>
         </div>
 
         <div class="choice-card" onclick="showExistingSolfasScreen()" style="border-style: solid; border-color: var(--ios-border);">
@@ -414,30 +406,30 @@
         </div>
     </div>
 
-    <!-- ================= الشاشة الثانية: نموذج إنشاء سلفة جديدة ================= -->
+    <!-- الشاشة الثانية: إنشاء سلفة جديدة -->
     <div id="createScreen" class="screen">
         <button class="back-btn" onclick="goHome()"><i class="fa-solid fa-arrow-right"></i> رجوع للقائمة الرئيسية</button>
         <div class="card">
             <h2><i class="fa-solid fa-folder-plus"></i> تفاصيل السلفة الجديدة</h2>
             <div class="form-group">
-                <label>اسم السلفة (مثال: سلفة الأصدقاء، سلفة الموظفين)</label>
+                <label>اسم السلفة (مثال: سلفة الأصدقاء)</label>
                 <input type="text" id="newSolfaName" placeholder="أدخل اسم السلفة...">
             </div>
             <div class="form-row">
                 <div class="form-group">
-                    <label>المبلغ الإجمالي للسلفة (د.ع)</label>
-                    <input type="number" id="newSolfaTotal" placeholder="مثال: 3000000" value="3000000">
+                    <label>المبلغ الإجمالي (د.ع)</label>
+                    <input type="number" id="newSolfaTotal" placeholder="3000000" value="3000000">
                 </div>
                 <div class="form-group">
-                    <label>مبلغ القسط الفردي (د.ع)</label>
-                    <input type="number" id="newSolfaInstallment" placeholder="مثال: 250000" value="250000">
+                    <label>قسط الفرد (د.ع)</label>
+                    <input type="number" id="newSolfaInstallment" placeholder="250000" value="250000">
                 </div>
             </div>
             <button class="btn btn-success" onclick="createNewSolfa()"><i class="fa-solid fa-check"></i> حفظ وبدء إدارة السلفة</button>
         </div>
     </div>
 
-    <!-- ================= الشاشة الثالثة: قائمة السلف الموجودة ================= -->
+    <!-- الشاشة الثالثة: قائمة السلف الموجودة -->
     <div id="existingScreen" class="screen">
         <button class="back-btn" onclick="goHome()"><i class="fa-solid fa-arrow-right"></i> رجوع للقائمة الرئيسية</button>
         <div class="card">
@@ -448,16 +440,15 @@
         </div>
     </div>
 
-    <!-- ================= الشاشة الرابعة: لوحة تحكم السلفة المختارة ================= -->
+    <!-- الشاشة الرابعة: لوحة تحكم السلفة المختارة -->
     <div id="dashboardScreen" class="screen">
-        <button class="back-btn" onclick="goHome()"><i class="fa-solid fa-arrow-right"></i> تغيير السلفة / القائمة الرئيسية</button>
+        <button class="back-btn" onclick="goHome()"><i class="fa-solid fa-arrow-right"></i> القائمة الرئيسية / السلف</button>
         
         <header>
             <h1 id="activeSolfaTitle">اسم السلفة</h1>
             <span id="activeSolfaBadge">نشطة</span>
         </header>
 
-        <!-- لوحة الإحصائيات -->
         <div class="dashboard-grid">
             <div class="stat-card">
                 <h3>إجمالي المشتركين</h3>
@@ -479,14 +470,13 @@
             </div>
         </div>
 
-        <!-- إضافة مشترك جديد -->
         <div class="card">
             <h2><i class="fa-solid fa-user-plus"></i> إضافة مشترك لهذه السلفة</h2>
             <div class="form-group">
-                <input type="text" id="memberName" placeholder="اسم المشترك الثلاثي (مثال: كرار أحمد حسين)">
+                <input type="text" id="memberName" placeholder="اسم المشترك الثلاثي">
             </div>
             <div class="form-row">
-                <input type="number" id="memberAmount" placeholder="مبلغ القسط (د.ع)">
+                <input type="number" id="memberAmount" placeholder="مبلغ القسط">
                 <select id="monthSelect">
                     <option value="الشهر الأول">الشهر الأول</option>
                     <option value="الشهر الثاني">الشهر الثاني</option>
@@ -505,18 +495,16 @@
             <button class="btn" onclick="addMember()"><i class="fa-solid fa-circle-plus"></i> إضافة المشترك للقائمة</button>
         </div>
 
-        <!-- قائمة المشتركين وتتبع السداد -->
         <div class="card">
             <h2><i class="fa-solid fa-users-gear"></i> إدارة المشتركين وحالات السداد</h2>
             <div class="search-filter">
                 <input type="text" id="searchBox" placeholder="🔍 ابحث عن اسم المشترك..." oninput="filterMembers()">
             </div>
             <div id="membersList">
-                <p style="text-align: center; color: var(--ios-text-secondary); padding: 20px;">جاري تحميل المشتركين...</p>
+                <p style="text-align: center; color: var(--ios-text-secondary); padding: 20px;">جاري التحميل...</p>
             </div>
         </div>
 
-        <!-- قسم القرعة الاحترافي -->
         <div class="draw-box">
             <h2><i class="fa-solid fa-trophy"></i> قرعة السلفة الشهرية</h2>
             <p>السحب عشوائي ويشمل المشتركين المسددين فقط</p>
@@ -529,10 +517,10 @@
         </div>
     </div>
 
-    <!-- كود الاتصال بـ Firebase ومعالجة التطبيق -->
+    <!-- البرمجة والاتصال بقاعدة البيانات مع حماية الأخطاء -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, push, set, onValue, update, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, push, set, onValue, update, remove, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         const firebaseConfig = {
             databaseURL: "https://solfaapp-1dda3-default-rtdb.firebaseio.com/"
@@ -544,9 +532,8 @@
         let currentSolfaId = null;
         let currentSolfaMeta = null;
         let rawDataCache = {};
-        let unsubscribers = null;
+        let activeListener = null;
 
-        // التنقل بين الشاشات
         window.showCreateScreen = function() {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById('createScreen').classList.add('active');
@@ -562,14 +549,21 @@
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById('homeScreen').classList.add('active');
             currentSolfaId = null;
-            if (unsubscribers) unsubscribers();
+            if (activeListener) {
+                activeListener();
+                activeListener = null;
+            }
         };
 
-        // إنشاء سلفة جديدة
+        // إنشاء سلفة جديدة مع معالجة الأخطاء لمنع تعليق الموبايل
         window.createNewSolfa = function() {
-            const name = document.getElementById('newSolfaName').value.trim();
-            const total = Number(document.getElementById('newSolfaTotal').value);
-            const installment = Number(document.getElementById('newSolfaInstallment').value);
+            const nameInput = document.getElementById('newSolfaName');
+            const totalInput = document.getElementById('newSolfaTotal');
+            const installmentInput = document.getElementById('newSolfaInstallment');
+
+            const name = nameInput.value.trim();
+            const total = Number(totalInput.value);
+            const installment = Number(installmentInput.value);
 
             if (!name) {
                 alert('الرجاء إدخال اسم السلفة');
@@ -586,17 +580,20 @@
                     installment: installment || 250000
                 }
             }).then(() => {
+                nameInput.value = '';
                 openSolfa(newSolfaRef.key, { name, totalAmount: total, installment });
-            }).catch(err => alert('خطأ في إنشاء السلفة: ' + err.message));
+            }).catch(err => {
+                alert('حدث خطأ في الاتصال بقاعدة البيانات: ' + err.message);
+            });
         };
 
-        // تحميل قائمة السلف الموجودة
+        // جلب السلف الموجودة
         function loadAllSolfas() {
             const container = document.getElementById('solfasListContainer');
             container.innerHTML = '<p style="text-align: center; color: var(--ios-text-secondary); padding: 20px;">جاري جلب السلف...</p>';
 
             const solfasRef = ref(db, 'solfas');
-            onValue(solfasRef, (snapshot) => {
+            get(solfasRef).then((snapshot) => {
                 const data = snapshot.val();
                 container.innerHTML = '';
 
@@ -621,11 +618,12 @@
                     `;
                     item.onclick = () => openSolfa(id, meta);
                     container.appendChild(item);
-                }, { onlyOnce: true });
+                });
+            }).catch(err => {
+                container.innerHTML = '<p style="text-align: center; color: var(--ios-danger); padding: 20px;">فشل تحميل السلف، تأكد من اتصال الإنترنت.</p>';
             });
         }
 
-        // فتح لوحة تحكم سلفة معينة
         window.openSolfa = function(id, meta) {
             currentSolfaId = id;
             currentSolfaMeta = meta;
@@ -636,22 +634,19 @@
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById('dashboardScreen').classList.add('active');
 
-            // الاستماع لتغييرات المشتركين في هذه السلفة حصرياً
+            if (activeListener) activeListener();
+
             const membersRef = ref(db, `solfas/${id}/members`);
             
-            // إلغاء الاستماع القديم إن وجد
-            if (unsubscribers) unsubscribers();
-
-            const unsubscribe = onValue(membersRef, (snapshot) => {
+            activeListener = onValue(membersRef, (snapshot) => {
                 const data = snapshot.val();
                 rawDataCache = data || {};
                 renderUI(rawDataCache, meta);
+            }, (error) => {
+                console.error(error);
             });
-
-            unsubscribers = () => {}; // يمكن توسيعها لإيقاف الاستماع عند الخروج
         };
 
-        // إضافة مشترك للسلفة الحالية
         window.addMember = function() {
             if (!currentSolfaId) return;
 
@@ -678,10 +673,9 @@
                 status: false
             }).then(() => {
                 nameInput.value = '';
-            }).catch(err => alert('خطأ في الإضافة'));
+            }).catch(err => alert('خطأ في إضافة المشترك'));
         };
 
-        // رسم الواجهة والإحصائيات
         function renderUI(data, meta) {
             const listContainer = document.getElementById('membersList');
             listContainer.innerHTML = '';
@@ -761,14 +755,13 @@
         };
 
         window.deleteCurrentSolfa = function() {
-            if (confirm('تحذير: هل أنت متأكد من حذف هذه السلفة بجميع المشتركين فيها نهائياً؟')) {
+            if (confirm('تحذير: هل أنت متأكد من حذف هذه السلفة بالكامل مع جميع المشتركين؟')) {
                 remove(ref(db, `solfas/${currentSolfaId}`)).then(() => {
                     goHome();
                 });
             }
         };
 
-        // نظام القرعة
         window.startLuckyDraw = function() {
             if (!rawDataCache || Object.keys(rawDataCache).length === 0) {
                 alert('لا يوجد مشتركين لإجراء القرعة!');
