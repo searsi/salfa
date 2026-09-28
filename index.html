@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>إدارة السلف الشهرية</title>
+    <!-- خط Tajawal المتناسق مع الأيفون -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- أيقونات FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #007AFF;
+            --success-color: #34C759;
+            --danger-color: #FF3B30;
+            --bg-color: #F2F2F7;
+            --card-bg: #FFFFFF;
+            --text-main: #1C1C1E;
+            --text-secondary: #8E8E93;
+            --border-color: #E5E5EA;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 16px;
+            max-width: 480px;
+            margin: 0 auto;
+            padding-bottom: 40px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+
+        header h1 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+
+        .card h2 {
+            font-size: 15px;
+            margin-bottom: 12px;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #D1D1D6;
+            border-radius: 12px;
+            font-size: 15px;
+            outline: none;
+            background: #FAFAFC;
+            color: var(--text-main);
+        }
+
+        input:focus, select:focus {
+            border-color: var(--primary-color);
+            background: #FFF;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        button:active {
+            opacity: 0.7;
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+        }
+
+        /* قائمة المشتركين */
+        .member-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .member-item:last-child {
+            border-bottom: none;
+        }
+
+        .member-info h3 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .member-info p {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .status-paid {
+            background-color: #E8F8EC;
+            color: var(--success-color);
+        }
+
+        .status-unpaid {
+            background-color: #FFEEEE;
+            color: var(--danger-color);
+        }
+
+        .delete-btn {
+            color: var(--danger-color);
+            cursor: pointer;
+            font-size: 15px;
+            padding: 5px;
+        }
+
+        /* قسم القرعة */
+        #draw-section {
+            text-align: center;
+        }
+
+        #winner-display {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--success-color);
+            margin: 15px 0;
+            min-height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stats-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .stat-box {
+            flex: 1;
+            background: var(--card-bg);
+            padding: 12px;
+            border-radius: 14px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+
+        .stat-box h4 {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .stat-box span {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1><i class="fa-solid fa-vault"></i> صندوق السلف الشهرية</h1>
+    </header>
+
+    <!-- الإحصائيات السريعة -->
+    <div class="stats-row">
+        <div class="stat-box">
+            <h4>إجمالي المشتركين</h4>
+            <span id="totalMembersCount">0</span>
+        </div>
+        <div class="stat-box">
+            <h4>المسددين هذا الشهر</h4>
+            <span id="paidMembersCount" style="color: var(--success-color);">0</span>
+        </div>
+    </div>
+
+    <!-- إضافة مشترك جديد -->
+    <div class="card">
+        <h2><i class="fa-solid fa-user-plus"></i> إضافة مشترك جديد</h2>
+        <div class="form-group">
+            <input type="text" id="memberName" placeholder="اسم المشترك (مثال: أحمد علي)">
+        </div>
+        <div class="form-group">
+            <select id="monthSelect">
+                <option value="الشهر الأول">الشهر الأول</option>
+                <option value="الشهر الثاني">الشهر الثاني</option>
+                <option value="الشهر الثالث">الشهر الثالث</option>
+                <option value="الشهر الرابع">الشهر الرابع</option>
+                <option value="الشهر الخامس">الشهر الخامس</option>
+                <option value="الشهر السادس">الشهر السادس</option>
+                <option value="الشهر السابع">الشهر السابع</option>
+                <option value="الشهر الثامن">الشهر الثامن</option>
+                <option value="الشهر التاسع">الشهر التاسع</option>
+                <option value="الشهر العاشر">الشهر العاشر</option>
+                <option value="الشهر الحادي عشر">الشهر الحادي عشر</option>
+                <option value="الشهر الثاني عشر">الشهر الثاني عشر</option>
+            </select>
+        </div>
+        <button onclick="addMember()">حفظ وإضافة المشترك</button>
+    </div>
+
+    <!-- قائمة المشتركين -->
+    <div class="card">
+        <h2><i class="fa-solid fa-users-line"></i> قائمة المشتركين (حالة السداد)</h2>
+        <div id="membersList">
+            <p style="text-align: center; color: var(--text-secondary); padding: 15px 0;">جاري تحميل البيانات...</p>
+        </div>
+    </div>
+
+    <!-- قسم القرعة -->
+    <div class="card" id="draw-section">
+        <h2><i class="fa-solid fa-trophy"></i> قرعة السلفة العشوائية</h2>
+        <p style="font-size: 12px; color: var(--text-secondary);">السحب يتم حصراً بين المشتركين الذين حالة سدادهم (مسدد)</p>
+        <div id="winner-display">اضغط ابدأ لإجراء القرعة 🎲</div>
+        <button class="btn-success" onclick="startLuckyDraw()">بدء السحب العشوائي</button>
+    </div>
+
+    <!-- ربط ملف الجافاسكريبت مع قاعدة البيانات -->
+    <script type="module" src="app.js"></script>
+</body>
+</html>
