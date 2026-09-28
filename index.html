@@ -425,7 +425,7 @@
                     <input type="number" id="newSolfaInstallment" placeholder="250000" value="250000">
                 </div>
             </div>
-            <button class="btn btn-success" onclick="createNewSolfa()"><i class="fa-solid fa-check"></i> حفظ وبدء إدارة السلفة</button>
+            <button class="btn btn-success" id="createBtn" onclick="createNewSolfa()"><i class="fa-solid fa-check"></i> حفظ وبدء إدارة السلفة</button>
         </div>
     </div>
 
@@ -492,7 +492,7 @@
                     <option value="الشهر الثاني عشر">الشهر الثاني عشر</option>
                 </select>
             </div>
-            <button class="btn" onclick="addMember()"><i class="fa-solid fa-circle-plus"></i> إضافة المشترك للقائمة</button>
+            <button class="btn" id="addMemberBtn" onclick="addMember()"><i class="fa-solid fa-circle-plus"></i> إضافة المشترك للقائمة</button>
         </div>
 
         <div class="card">
@@ -517,7 +517,7 @@
         </div>
     </div>
 
-    <!-- البرمجة والاتصال بقاعدة البيانات مع حماية الأخطاء -->
+    <!-- البرمجة والاتصال بقاعدة البيانات -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, push, set, onValue, update, remove, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
@@ -555,11 +555,12 @@
             }
         };
 
-        // إنشاء سلفة جديدة مع معالجة الأخطاء لمنع تعليق الموبايل
+        // إنشاء سلفة جديدة مع مؤشر مرئي لمنع الشعور بالتعليق
         window.createNewSolfa = function() {
             const nameInput = document.getElementById('newSolfaName');
             const totalInput = document.getElementById('newSolfaTotal');
             const installmentInput = document.getElementById('newSolfaInstallment');
+            const btn = document.getElementById('createBtn');
 
             const name = nameInput.value.trim();
             const total = Number(totalInput.value);
@@ -569,6 +570,9 @@
                 alert('الرجاء إدخال اسم السلفة');
                 return;
             }
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري الإنشاء...';
 
             const solfasRef = ref(db, 'solfas');
             const newSolfaRef = push(solfasRef);
@@ -580,10 +584,14 @@
                     installment: installment || 250000
                 }
             }).then(() => {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> حفظ وبدء إدارة السلفة';
                 nameInput.value = '';
                 openSolfa(newSolfaRef.key, { name, totalAmount: total, installment });
             }).catch(err => {
-                alert('حدث خطأ في الاتصال بقاعدة البيانات: ' + err.message);
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> حفظ وبدء إدارة السلفة';
+                alert('خطأ في الاتصال بقاعدة البيانات. تأكد من ضبط قواعد الأمان (Rules) في Firebase: ' + err.message);
             });
         };
 
@@ -620,7 +628,7 @@
                     container.appendChild(item);
                 });
             }).catch(err => {
-                container.innerHTML = '<p style="text-align: center; color: var(--ios-danger); padding: 20px;">فشل تحميل السلف، تأكد من اتصال الإنترنت.</p>';
+                container.innerHTML = '<p style="text-align: center; color: var(--ios-danger); padding: 20px;">فشل تحميل السلف، تأكد من ضبط قواعد الأمان (Rules) في Firebase.</p>';
             });
         }
 
@@ -653,6 +661,7 @@
             const nameInput = document.getElementById('memberName');
             const amountInput = document.getElementById('memberAmount');
             const monthSelect = document.getElementById('monthSelect');
+            const btn = document.getElementById('addMemberBtn');
             
             const name = nameInput.value.trim();
             const amount = Number(amountInput.value);
@@ -663,6 +672,7 @@
                 return;
             }
 
+            btn.disabled = true;
             const membersRef = ref(db, `solfas/${currentSolfaId}/members`);
             const newRef = push(membersRef);
             
@@ -672,8 +682,12 @@
                 month: month,
                 status: false
             }).then(() => {
+                btn.disabled = false;
                 nameInput.value = '';
-            }).catch(err => alert('خطأ في إضافة المشترك'));
+            }).catch(err => {
+                btn.disabled = false;
+                alert('خطأ في إضافة المشترك');
+            });
         };
 
         function renderUI(data, meta) {
