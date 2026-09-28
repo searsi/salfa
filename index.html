@@ -6,7 +6,7 @@
     <title>صندوق السلف الذكي - Pro Max</title>
     <!-- خط Tajawal الفاخر -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-    <!-- مكتبة الأيقونات الحديثة Lucide/FontAwesome -->
+    <!-- مكتبة الأيقونات الحديثة -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -96,7 +96,6 @@
         }
         .back-btn:active { transform: scale(0.97); }
 
-        /* البطاقات العامة */
         .card {
             background: var(--card-bg);
             border-radius: var(--radius);
@@ -117,7 +116,6 @@
         }
         .card h2 i { color: var(--primary); }
 
-        /* بطاقات الاختيار الرئيسية */
         .choice-card {
             background: var(--card-bg);
             border-radius: var(--radius);
@@ -143,7 +141,6 @@
         .choice-card p { font-size: 13px; color: var(--text-secondary); }
         .choice-card.primary p { opacity: 0.85; }
 
-        /* الحقول النماذج الفاخرة */
         .form-group { margin-bottom: 16px; }
         .form-group label {
             display: block;
@@ -197,7 +194,6 @@
         .btn-success { background-color: var(--success); box-shadow: 0 6px 16px rgba(16, 185, 129, 0.2); }
         .btn-danger { background-color: var(--danger); box-shadow: 0 6px 16px rgba(255, 59, 48, 0.2); }
 
-        /* الإحصائيات */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -215,7 +211,6 @@
         .stat-box h3 { font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; font-weight: 700; }
         .stat-box .val { font-size: 18px; font-weight: 900; color: var(--text-main); }
 
-        /* قائمة السلف */
         .solfa-card-item {
             background: var(--card-bg);
             border: 1.5px solid var(--border);
@@ -233,41 +228,78 @@
         .solfa-info h4 { font-size: 16px; font-weight: 800; color: var(--text-main); margin-bottom: 4px; }
         .solfa-info p { font-size: 12px; color: var(--text-secondary); }
 
-        /* بطاقة المشترك والأشهر */
+        /* تصميم بطاقة المشترك المحسنة والقابلة للطي */
         .member-box {
             background: #FAFAFC;
             border: 1px solid var(--border);
             border-radius: 18px;
-            padding: 18px;
-            margin-bottom: 16px;
+            padding: 14px 16px;
+            margin-bottom: 12px;
+            transition: all 0.2s;
         }
-        .member-header {
+        .member-main-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 14px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--border);
         }
-        .member-header h4 { font-size: 16px; font-weight: 800; color: var(--text-main); }
-        
+        .member-info-group h4 {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 2px;
+        }
+        .member-subtitle {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 700;
+        }
+
+        .member-quick-actions {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .action-chip {
+            background: #EDF2F7;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+        .action-chip.won {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        /* تفاصيل الأشهر المنسدلة */
+        .months-dropdown-container {
+            display: none;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--border);
+        }
+        .months-dropdown-container.open {
+            display: block;
+        }
+
         .months-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-bottom: 12px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
         }
         .month-badge {
             background: var(--danger-light);
             color: var(--danger);
-            padding: 10px 6px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 700;
+            padding: 8px 2px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 800;
             text-align: center;
             cursor: pointer;
             border: 1px solid rgba(255, 59, 48, 0.15);
-            transition: all 0.2s;
         }
         .month-badge.paid {
             background: var(--success-light);
@@ -275,18 +307,19 @@
             border-color: rgba(16, 185, 129, 0.15);
         }
 
-        .winner-status {
+        .toggle-months-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
             font-size: 12px;
             font-weight: 800;
-            color: var(--primary);
-            background: var(--primary-light);
-            padding: 6px 12px;
-            border-radius: 10px;
-            display: inline-block;
-            margin-top: 6px;
+            cursor: pointer;
+            margin-top: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
 
-        /* قسم القرعة */
         .draw-box {
             text-align: center;
             background: linear-gradient(135deg, #6366F1 0%, #4338CA 100%);
@@ -318,7 +351,7 @@
 </head>
 <body>
 
-    <!-- الشاشة الأولى: الرئيسية -->
+    <!-- الشاشة الأولى -->
     <div id="homeScreen" class="screen active">
         <header>
             <h1><i class="fa-solid fa-vault" style="color: var(--primary);"></i> صندوق السلف الذكي</h1>
@@ -338,7 +371,7 @@
         </div>
     </div>
 
-    <!-- الشاشة الثانية: إنشاء سلفة -->
+    <!-- الشاشة الثانية -->
     <div id="createScreen" class="screen">
         <button class="back-btn" onclick="goHome()"><i class="fa-solid fa-arrow-right"></i> رجوع للقائمة</button>
         <div class="card">
@@ -371,7 +404,7 @@
         </div>
     </div>
 
-    <!-- الشاشة الثالثة: استعراض السلف -->
+    <!-- الشاشة الثالثة -->
     <div id="existingScreen" class="screen">
         <button class="back-btn" onclick="goHome()"><i class="fa-solid fa-arrow-right"></i> رجوع للقائمة</button>
         <div class="card">
@@ -382,7 +415,7 @@
         </div>
     </div>
 
-    <!-- الشاشة الرابعة: لوحة التحكم بالمشتركين والأشهر -->
+    <!-- الشاشة الرابعة: لوحة التحكم -->
     <div id="dashboardScreen" class="screen">
         <button class="back-btn" onclick="goHome()"><i class="fa-solid fa-arrow-right"></i> القائمة الرئيسية</button>
         
@@ -391,7 +424,6 @@
             <span id="activeSolfaBadge">نشطة</span>
         </header>
 
-        <!-- الإحصائيات -->
         <div class="stats-grid">
             <div class="stat-box">
                 <h3>إجمالي المشتركين</h3>
@@ -407,18 +439,16 @@
             </div>
         </div>
 
-        <!-- إضافة مشترك -->
         <div class="card">
             <h2><i class="fa-solid fa-user-plus"></i> إضافة مشترك جديد</h2>
             <div class="form-group">
                 <input type="text" id="memberName" placeholder="اسم المشترك الثلاثي">
             </div>
-            <button class="btn" onclick="addMember()"><i class="fa-solid fa-plus"></i> إضافة وتوليد جدول أشهره</button>
+            <button class="btn" onclick="addMember()"><i class="fa-solid fa-plus"></i> إضافة المشترك للقائمة</button>
         </div>
 
-        <!-- المشتركون والأشهر -->
         <div class="card">
-            <h2><i class="fa-solid fa-users-rectangle"></i> جدول تتبع سداد الأشهر</h2>
+            <h2><i class="fa-solid fa-users-rectangle"></i> قائمة الأعضاء (عرض منظم)</h2>
             <div class="search-box">
                 <input type="text" id="searchBox" placeholder="🔍 ابحث عن اسم المشترك..." oninput="renderUI()">
             </div>
@@ -427,7 +457,6 @@
             </div>
         </div>
 
-        <!-- القرعة -->
         <div class="draw-box">
             <h2><i class="fa-solid fa-dice"></i> قرعة السلفة العشوائية</h2>
             <p>تختار فائزاً لم يستلم السلفة سابقاً وبشكل نزيه 100%</p>
@@ -446,7 +475,6 @@
         let allSolfas = JSON.parse(localStorage.getItem('promax_solfas_data') || '{}');
         let currentSolfaId = null;
 
-        // دالة تنسيق الفواصل للعملة العراقية (مثال: 3,000,000)
         function formatCurrencyInput(input) {
             let value = input.value.replace(/\D/g, '');
             if (value === '') {
@@ -564,7 +592,7 @@
             let monthsData = {};
             const count = solfa.meta.monthsCount || 12;
             for (let i = 1; i <= count; i++) {
-                monthsData['month_' + i] = false; // افتراضياً غير مسدد
+                monthsData['month_' + i] = false;
             }
 
             solfa.members[memberId] = {
@@ -603,11 +631,14 @@
                 const m = members[mId];
                 if (searchQuery && !m.name.toLowerCase().includes(searchQuery)) return;
 
-                let monthsHTML = '';
+                // حساب كم شهر مسدد
+                let paidCount = 0;
                 const count = solfa.meta.monthsCount || 12;
+                let monthsHTML = '';
                 
                 for (let i = 1; i <= count; i++) {
                     const isPaid = m.months['month_' + i];
+                    if (isPaid) paidCount++;
                     monthsHTML += `
                         <div class="month-badge ${isPaid ? 'paid' : ''}" onclick="toggleMonth('${mId}', 'month_${i}')">
                             ش${i} <br>${isPaid ? '✓ مسدد' : '✕ غير'}
@@ -618,30 +649,47 @@
                 const item = document.createElement('div');
                 item.className = 'member-box';
                 item.innerHTML = `
-                    <div class="member-header">
-                        <h4>👤 ${m.name}</h4>
-                        <div>
-                            <button style="background:${m.hasWon ? 'var(--primary-light)' : '#F1F5F9'}; color:${m.hasWon ? 'var(--primary)' : 'var(--text-secondary)'}; border:none; padding:6px 12px; border-radius:10px; cursor:pointer; font-size:11px; font-weight:700;" onclick="toggleWinner('${mId}')">
-                                ${m.hasWon ? '⭐ استلم' : '⚪ لم يستلم'}
+                    <div class="member-main-row">
+                        <div class="member-info-group">
+                            <h4>👤 ${m.name}</h4>
+                            <div class="member-subtitle">
+                                مسدد: ${paidCount} من ${count} شهر ${m.hasWon ? '| ⭐ استلم السلفة' : ''}
+                            </div>
+                        </div>
+                        <div class="member-quick-actions">
+                            <button class="action-chip ${m.hasWon ? 'won' : ''}" onclick="toggleWinner('${mId}')" title="حالة الاستلام">
+                                ${m.hasWon ? 'استلم ✓' : 'لم يستلم'}
                             </button>
-                            <button style="background:var(--danger-light); color:var(--danger); border:none; padding:6px 10px; border-radius:10px; cursor:pointer; font-size:11px; font-weight:700; margin-right:4px;" onclick="deleteMember('${mId}')">حذف</button>
+                            <button class="action-chip" style="background:var(--danger-light); color:var(--danger);" onclick="deleteMember('${mId}')" title="حذف">🗑️</button>
                         </div>
                     </div>
-                    <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 8px; font-weight:700;">انقر على الشهر لتغيير حالة السداد:</div>
-                    <div class="months-grid">
-                        ${monthsHTML}
+                    <button class="toggle-months-btn" onclick="toggleMonthsDropdown('${mId}')">
+                        <i class="fa-solid fa-calendar-days"></i> عرض/إخفاء جدول الأشهر (${paidCount}/${count}) 🔽
+                    </button>
+                    <div id="dropdown_${mId}" class="months-dropdown-container">
+                        <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 8px; font-weight:700;">انقر على الشهر لتبديل حالة السداد:</div>
+                        <div class="months-grid">
+                            ${monthsHTML}
+                        </div>
                     </div>
-                    ${m.hasWon ? `<div class="winner-status">🏆 استلم السلفة في (${m.wonMonth || 'محدد'})</div>` : ''}
                 `;
                 listContainer.appendChild(item);
             });
         }
+
+        // فتح وإغلاق جدول الأشهر لكل مشترك بلمسة واحدة
+        window.toggleMonthsDropdown = function(mId) {
+            const box = document.getElementById('dropdown_' + mId);
+            box.classList.toggle('open');
+        };
 
         window.toggleMonth = function(mId, monthKey) {
             const m = allSolfas[currentSolfaId].members[mId];
             m.months[monthKey] = !m.months[monthKey];
             saveStorage();
             renderUI();
+            // إبقاء القائمة مفتوحة لنفس الشخص بعد التعديل لتجربة أسرع
+            document.getElementById('dropdown_' + mId).classList.add('open');
         };
 
         window.toggleWinner = function(mId) {
