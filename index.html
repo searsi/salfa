@@ -3,24 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>إدارة السلف الذكية - Pro</title>
+    <title>صندوق السلف الذكي - Pro Max</title>
     <!-- خط Tajawal الفاخر -->
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <!-- أيقونات FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <!-- مكتبة الأيقونات الحديثة Lucide/FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --ios-bg: #F5F5F7;
-            --ios-card: #FFFFFF;
-            --ios-primary: #007AFF;
-            --ios-success: #34C759;
-            --ios-warning: #FF9500;
-            --ios-danger: #FF3B30;
-            --ios-text: #1D1D1F;
-            --ios-text-secondary: #86868B;
-            --ios-border: #E5E5EA;
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
-            --radius: 20px;
+            --bg-color: #F4F6FB;
+            --card-bg: #FFFFFF;
+            --primary: #0061FF;
+            --primary-gradient: linear-gradient(135deg, #0061FF 0%, #60EFFF 100%);
+            --primary-light: #F0F5FF;
+            --success: #10B981;
+            --success-light: #E1FDF4;
+            --danger: #FF3B30;
+            --danger-light: #FFF0F0;
+            --warning: #FF9500;
+            --text-main: #1C1C1E;
+            --text-secondary: #8E8E93;
+            --border: #E5E5EA;
+            --shadow: 0 12px 30px rgba(0, 0, 0, 0.04);
+            --radius: 24px;
         }
 
         * {
@@ -32,385 +36,313 @@
         }
 
         body {
-            background-color: var(--ios-bg);
-            color: var(--ios-text);
-            padding: 16px;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 20px 16px;
             max-width: 480px;
             margin: 0 auto;
-            padding-bottom: 50px;
+            padding-bottom: 60px;
         }
 
-        .screen {
-            display: none;
-        }
-        .screen.active {
-            display: block;
+        .screen { display: none; }
+        .screen.active { display: block; animation: fadeIn 0.3s ease; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
             padding: 0 4px;
         }
 
         header h1 {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: 800;
-            color: var(--ios-text);
-            letter-spacing: -0.5px;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         header span {
             font-size: 12px;
-            background: rgba(0, 122, 255, 0.1);
-            color: var(--ios-primary);
-            padding: 6px 12px;
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 6px 14px;
             border-radius: 20px;
             font-weight: 700;
         }
 
         .back-btn {
-            background: none;
-            border: none;
-            color: var(--ios-primary);
-            font-size: 15px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            color: var(--primary);
+            font-size: 14px;
             font-weight: 700;
             cursor: pointer;
-            display: flex;
+            margin-bottom: 20px;
+            padding: 10px 18px;
+            border-radius: 14px;
+            display: inline-flex;
             align-items: center;
-            gap: 6px;
-            margin-bottom: 12px;
-            padding: 6px 0;
+            gap: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            transition: transform 0.1s;
         }
+        .back-btn:active { transform: scale(0.97); }
 
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-
-        .stat-card {
-            background: var(--ios-card);
-            padding: 16px;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            border: 1px solid rgba(0,0,0,0.02);
-        }
-
-        .stat-card.full {
-            grid-column: span 2;
-        }
-
-        .stat-card h3 {
-            font-size: 13px;
-            color: var(--ios-text-secondary);
-            margin-bottom: 6px;
-            font-weight: 500;
-        }
-
-        .stat-card .value {
-            font-size: 18px;
-            font-weight: 800;
-            color: var(--ios-text);
-        }
-
-        .progress-bar-container {
-            width: 100%;
-            background: #EFEFF4;
-            height: 10px;
-            border-radius: 5px;
-            margin-top: 10px;
-            overflow: hidden;
-        }
-
-        .progress-bar-fill {
-            height: 100%;
-            background: var(--ios-success);
-            width: 0%;
-            transition: width 0.5s ease;
-            border-radius: 5px;
-        }
-
+        /* البطاقات العامة */
         .card {
-            background: var(--ios-card);
+            background: var(--card-bg);
             border-radius: var(--radius);
-            padding: 20px;
-            margin-bottom: 16px;
+            padding: 22px;
+            margin-bottom: 18px;
             box-shadow: var(--shadow);
-            border: 1px solid rgba(0,0,0,0.02);
+            border: 1px solid rgba(229, 229, 234, 0.6);
         }
 
         .card h2 {
             font-size: 16px;
             margin-bottom: 16px;
-            color: var(--ios-text);
+            color: var(--text-main);
+            font-weight: 800;
             display: flex;
             align-items: center;
             gap: 10px;
+        }
+        .card h2 i { color: var(--primary); }
+
+        /* بطاقات الاختيار الرئيسية */
+        .choice-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 26px 20px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            border: 2px solid var(--border);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .choice-card:active { transform: scale(0.98); }
+        .choice-card.primary {
+            background: linear-gradient(135deg, #0061FF 0%, #0040DD 100%);
+            color: white;
+            border: none;
+            box-shadow: 0 12px 25px rgba(0, 97, 255, 0.25);
+        }
+        .choice-card.primary h3, .choice-card.primary p { color: white; }
+        .choice-card i { font-size: 32px; margin-bottom: 12px; color: var(--primary); }
+        .choice-card.primary i { color: white; }
+        .choice-card h3 { font-size: 18px; margin-bottom: 6px; font-weight: 800; }
+        .choice-card p { font-size: 13px; color: var(--text-secondary); }
+        .choice-card.primary p { opacity: 0.85; }
+
+        /* الحقول النماذج الفاخرة */
+        .form-group { margin-bottom: 16px; }
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
             font-weight: 700;
         }
 
-        .card h2 i {
-            color: var(--ios-primary);
-            font-size: 18px;
+        input, select {
+            width: 100%;
+            padding: 15px 18px;
+            border: 1.5px solid var(--border);
+            border-radius: 16px;
+            font-size: 15px;
+            outline: none;
+            background: #FAFAFC;
+            color: var(--text-main);
+            transition: all 0.2s;
+        }
+        input:focus, select:focus {
+            border-color: var(--primary);
+            background: #FFF;
+            box-shadow: 0 0 0 4px var(--primary-light);
         }
 
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 12px;
-        }
-
-        .form-group {
-            margin-bottom: 12px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 13px;
-            color: var(--ios-text-secondary);
-            margin-bottom: 6px;
-            font-weight: 600;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 14px 16px;
-            border: 1px solid var(--ios-border);
-            border-radius: 14px;
-            font-size: 14px;
-            outline: none;
-            background: #FAFAFC;
-            color: var(--ios-text);
-            transition: all 0.2s;
-        }
-
-        input:focus, select:focus {
-            border-color: var(--ios-primary);
-            background: #FFF;
-            box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.1);
+            gap: 12px;
         }
 
         .btn {
             width: 100%;
-            padding: 14px;
-            background-color: var(--ios-primary);
+            padding: 16px;
+            background-color: var(--primary);
             color: white;
             border: none;
-            border-radius: 14px;
-            font-size: 15px;
-            font-weight: 700;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 800;
             cursor: pointer;
-            transition: transform 0.1s, opacity 0.2s;
+            box-shadow: 0 6px 16px rgba(0, 97, 255, 0.2);
+            transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
         }
+        .btn:active { transform: scale(0.98); opacity: 0.9; }
+        .btn-success { background-color: var(--success); box-shadow: 0 6px 16px rgba(16, 185, 129, 0.2); }
+        .btn-danger { background-color: var(--danger); box-shadow: 0 6px 16px rgba(255, 59, 48, 0.2); }
 
-        .btn:active {
-            transform: scale(0.98);
-            opacity: 0.9;
+        /* الإحصائيات */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 18px;
         }
-
-        .btn-success { background-color: var(--ios-success); }
-        .btn-warning { background-color: var(--ios-warning); }
-        .btn-danger { background-color: var(--ios-danger); }
-
-        .choice-card {
-            background: var(--ios-card);
+        .stat-box {
+            background: var(--card-bg);
+            padding: 18px;
             border-radius: var(--radius);
-            padding: 24px;
-            margin-bottom: 16px;
             box-shadow: var(--shadow);
-            text-align: center;
-            border: 2px dashed var(--ios-border);
+            border: 1px solid var(--border);
+        }
+        .stat-box.full { grid-column: span 2; }
+        .stat-box h3 { font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; font-weight: 700; }
+        .stat-box .val { font-size: 18px; font-weight: 900; color: var(--text-main); }
+
+        /* قائمة السلف */
+        .solfa-card-item {
+            background: var(--card-bg);
+            border: 1.5px solid var(--border);
+            padding: 18px;
+            border-radius: 18px;
+            margin-bottom: 14px;
             cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
             transition: all 0.2s;
         }
-        .choice-card:hover {
-            border-color: var(--ios-primary);
-            background: rgba(0,122,255,0.01);
-        }
-        .choice-card i {
-            font-size: 36px;
-            color: var(--ios-primary);
-            margin-bottom: 12px;
-        }
-        .choice-card h3 {
-            font-size: 18px;
-            margin-bottom: 6px;
-            font-weight: 700;
-        }
-        .choice-card p {
-            font-size: 13px;
-            color: var(--ios-text-secondary);
-        }
+        .solfa-card-item:hover { border-color: var(--primary); background: var(--primary-light); }
+        .solfa-info h4 { font-size: 16px; font-weight: 800; color: var(--text-main); margin-bottom: 4px; }
+        .solfa-info p { font-size: 12px; color: var(--text-secondary); }
 
-        .solfa-item {
+        /* بطاقة المشترك والأشهر */
+        .member-box {
             background: #FAFAFC;
-            border: 1px solid var(--ios-border);
-            padding: 16px;
-            border-radius: 14px;
-            margin-bottom: 12px;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 18px;
+            margin-bottom: 16px;
+        }
+        .member-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            cursor: pointer;
-            transition: all 0.2s;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
         }
-        .solfa-item:hover {
-            border-color: var(--ios-primary);
-            background: #FFF;
-        }
-        .solfa-info h4 {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--ios-text);
-            margin-bottom: 4px;
-        }
-        .solfa-info p {
-            font-size: 12px;
-            color: var(--ios-text-secondary);
-        }
-
-        .member-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px 0;
-            border-bottom: 1px solid var(--ios-border);
-        }
-
-        .member-item:last-child {
-            border-bottom: none;
-        }
-
-        .member-details h4 {
-            font-size: 15px;
-            font-weight: 700;
-            color: var(--ios-text);
-        }
-
-        .member-details .meta {
-            font-size: 12px;
-            color: var(--ios-text-secondary);
-            margin-top: 3px;
-            display: flex;
+        .member-header h4 { font-size: 16px; font-weight: 800; color: var(--text-main); }
+        
+        .months-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 8px;
+            margin-bottom: 12px;
         }
-
-        .member-actions {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .status-badge {
-            padding: 6px 14px;
-            border-radius: 20px;
+        .month-badge {
+            background: var(--danger-light);
+            color: var(--danger);
+            padding: 10px 6px;
+            border-radius: 12px;
             font-size: 12px;
             font-weight: 700;
+            text-align: center;
             cursor: pointer;
-            border: none;
+            border: 1px solid rgba(255, 59, 48, 0.15);
             transition: all 0.2s;
         }
-
-        .status-paid {
-            background-color: #E8F8EC;
-            color: var(--ios-success);
+        .month-badge.paid {
+            background: var(--success-light);
+            color: var(--success);
+            border-color: rgba(16, 185, 129, 0.15);
         }
 
-        .status-unpaid {
-            background-color: #FFF0F0;
-            color: var(--ios-danger);
+        .winner-status {
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--primary);
+            background: var(--primary-light);
+            padding: 6px 12px;
+            border-radius: 10px;
+            display: inline-block;
+            margin-top: 6px;
         }
 
-        .icon-btn {
-            background: none;
-            border: none;
-            color: var(--ios-text-secondary);
-            font-size: 15px;
-            cursor: pointer;
-            padding: 6px;
-            transition: color 0.2s;
-        }
-
-        .icon-btn:hover { color: var(--ios-danger); }
-
+        /* قسم القرعة */
         .draw-box {
             text-align: center;
-            background: linear-gradient(135deg, #007AFF 0%, #0051A8 100%);
+            background: linear-gradient(135deg, #6366F1 0%, #4338CA 100%);
             color: white;
             border-radius: var(--radius);
-            padding: 24px;
-            margin-bottom: 16px;
-            box-shadow: 0 10px 25px rgba(0, 122, 255, 0.3);
+            padding: 26px;
+            margin-bottom: 18px;
+            box-shadow: 0 12px 30px rgba(99, 102, 241, 0.25);
         }
-
-        .draw-box h2 {
-            color: white;
-            justify-content: center;
-            margin-bottom: 8px;
-        }
-
-        .draw-box p {
-            font-size: 13px;
-            color: rgba(255,255,255,0.8);
-            margin-bottom: 16px;
-        }
-
+        .draw-box h2 { color: white; justify-content: center; margin-bottom: 6px; font-weight: 900; }
+        .draw-box p { font-size: 13px; opacity: 0.85; margin-bottom: 18px; }
         #winnerDisplay {
             font-size: 20px;
-            font-weight: 800;
+            font-weight: 900;
             background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            padding: 16px;
-            border-radius: 14px;
-            margin-bottom: 16px;
+            padding: 18px;
+            border-radius: 16px;
+            margin-bottom: 18px;
             min-height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
             border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
         }
 
-        .search-filter {
-            margin-bottom: 14px;
-        }
+        .search-box { margin-bottom: 16px; }
     </style>
 </head>
 <body>
 
-    <!-- الشاشة الأولى: الاختيار -->
+    <!-- الشاشة الأولى: الرئيسية -->
     <div id="homeScreen" class="screen active">
         <header>
-            <h1><i class="fa-solid fa-vault" style="color: var(--ios-primary);"></i> نظام السلف الشامل</h1>
-            <span>لوحة التحكم</span>
+            <h1><i class="fa-solid fa-vault" style="color: var(--primary);"></i> صندوق السلف الذكي</h1>
+            <span>Pro Max</span>
         </header>
 
-        <div class="choice-card" onclick="showCreateScreen()">
+        <div class="choice-card primary" onclick="showCreateScreen()">
             <i class="fa-solid fa-circle-plus"></i>
             <h3>إنشاء سلفة جديدة</h3>
-            <p>إنشاء صندوق سلفة جديد، وتحديد إجمالي المبلغ وقسط كل شخص</p>
+            <p>ابدأ صندوق سلفة جديد بالكامل مع تحديد التواريخ والمبالغ بدقة</p>
         </div>
 
-        <div class="choice-card" onclick="showExistingSolfasScreen()" style="border-style: solid; border-color: var(--ios-border);">
-            <i class="fa-solid fa-list-check" style="color: var(--ios-success);"></i>
-            <h3>السلف الموجودة بالنظام</h3>
-            <p>اختر من قائمة السلف المخزنة في قاعدة البيانات لمتابعتها وإدارتها</p>
+        <div class="choice-card" onclick="showExistingSolfasScreen()">
+            <i class="fa-solid fa-folder-open"></i>
+            <h3>السلف المسجلة بالنظام</h3>
+            <p>استعرض سلفك الحالية، تتبع الأشهر والمدفوعات، وإجراء القرعة</p>
         </div>
     </div>
 
-    <!-- الشاشة الثانية: إنشاء سلفة جديدة -->
+    <!-- الشاشة الثانية: إنشاء سلفة -->
     <div id="createScreen" class="screen">
-        <button class="back-btn" onclick="goHome()"><i class="fa-solid fa-arrow-right"></i> رجوع للقائمة الرئيسية</button>
+        <button class="back-btn" onclick="goHome()"><i class="fa-solid fa-arrow-right"></i> رجوع للقائمة</button>
         <div class="card">
-            <h2><i class="fa-solid fa-folder-plus"></i> تفاصيل السلفة الجديدة</h2>
+            <h2><i class="fa-solid fa-sliders"></i> تفاصيل الصندوق الجديد</h2>
             <div class="form-group">
                 <label>اسم السلفة (مثال: سلفة الأصدقاء)</label>
                 <input type="text" id="newSolfaName" placeholder="أدخل اسم السلفة...">
@@ -418,121 +350,120 @@
             <div class="form-row">
                 <div class="form-group">
                     <label>المبلغ الإجمالي (د.ع)</label>
-                    <input type="number" id="newSolfaTotal" placeholder="3000000" value="3000000">
+                    <input type="text" id="newSolfaTotal" value="3,000,000" oninput="formatCurrencyInput(this)">
                 </div>
                 <div class="form-group">
-                    <label>قسط الفرد (د.ع)</label>
-                    <input type="number" id="newSolfaInstallment" placeholder="250000" value="250000">
+                    <label>قسط الفرد الشهري (د.ع)</label>
+                    <input type="text" id="newSolfaInstallment" value="250,000" oninput="formatCurrencyInput(this)">
                 </div>
             </div>
-            <button class="btn btn-success" id="createBtn" onclick="createNewSolfa()"><i class="fa-solid fa-check"></i> حفظ وبدء إدارة السلفة</button>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>تاريخ البدء</label>
+                    <input type="date" id="newSolfaStartDate">
+                </div>
+                <div class="form-group">
+                    <label>عدد الأشهر (الأفراد)</label>
+                    <input type="number" id="newSolfaMonthsCount" value="12">
+                </div>
+            </div>
+            <button class="btn btn-success" onclick="createNewSolfa()"><i class="fa-solid fa-check"></i> حفظ وبدء الصندوق</button>
         </div>
     </div>
 
-    <!-- الشاشة الثالثة: قائمة السلف الموجودة -->
+    <!-- الشاشة الثالثة: استعراض السلف -->
     <div id="existingScreen" class="screen">
-        <button class="back-btn" onclick="goHome()"><i class="fa-solid fa-arrow-right"></i> رجوع للقائمة الرئيسية</button>
+        <button class="back-btn" onclick="goHome()"><i class="fa-solid fa-arrow-right"></i> رجوع للقائمة</button>
         <div class="card">
-            <h2><i class="fa-solid fa-boxes-stacked"></i> السلف المسجلة في النظام</h2>
+            <h2><i class="fa-solid fa-list-check"></i> السلف المحفوظة</h2>
             <div id="solfasListContainer">
-                <p style="text-align: center; color: var(--ios-text-secondary); padding: 20px;">جاري تحميل السلف...</p>
+                <p style="text-align: center; color: var(--text-secondary); padding: 20px;">جاري التحميل...</p>
             </div>
         </div>
     </div>
 
-    <!-- الشاشة الرابعة: لوحة تحكم السلفة المختارة -->
+    <!-- الشاشة الرابعة: لوحة التحكم بالمشتركين والأشهر -->
     <div id="dashboardScreen" class="screen">
-        <button class="back-btn" onclick="goHome()"><i class="fa-solid fa-arrow-right"></i> القائمة الرئيسية / السلف</button>
+        <button class="back-btn" onclick="goHome()"><i class="fa-solid fa-arrow-right"></i> القائمة الرئيسية</button>
         
         <header>
             <h1 id="activeSolfaTitle">اسم السلفة</h1>
             <span id="activeSolfaBadge">نشطة</span>
         </header>
 
-        <div class="dashboard-grid">
-            <div class="stat-card">
+        <!-- الإحصائيات -->
+        <div class="stats-grid">
+            <div class="stat-box">
                 <h3>إجمالي المشتركين</h3>
-                <div class="value" id="statTotalMembers">0</div>
+                <div class="val" id="statTotalMembers">0</div>
             </div>
-            <div class="stat-card">
-                <h3>إجمالي السلفة الكلي</h3>
-                <div class="value" id="statTotalAmount" style="color: var(--ios-primary);">0</div>
+            <div class="stat-box">
+                <h3>قيمة الصندوق الكلي</h3>
+                <div class="val" id="statTotalAmount" style="color: var(--primary);">0</div>
             </div>
-            <div class="stat-card full">
-                <h3>موقف السداد الشهري</h3>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
-                    <span id="statPaidCount" style="font-weight: 700; font-size: 14px;">0 من 0 مسدد</span>
-                    <span id="statPercentage" style="font-weight: 800; color: var(--ios-success);">0%</span>
-                </div>
-                <div class="progress-bar-container">
-                    <div class="progress-bar-fill" id="progressBar"></div>
-                </div>
+            <div class="stat-box full">
+                <h3>تاريخ البداية والنهاية المتوقعة</h3>
+                <div class="val" id="statDateRange" style="font-size: 13px; margin-top: 4px; color: var(--text-secondary); font-weight: 700;">-</div>
             </div>
         </div>
 
+        <!-- إضافة مشترك -->
         <div class="card">
-            <h2><i class="fa-solid fa-user-plus"></i> إضافة مشترك لهذه السلفة</h2>
+            <h2><i class="fa-solid fa-user-plus"></i> إضافة مشترك جديد</h2>
             <div class="form-group">
                 <input type="text" id="memberName" placeholder="اسم المشترك الثلاثي">
             </div>
-            <div class="form-row">
-                <input type="number" id="memberAmount" placeholder="مبلغ القسط">
-                <select id="monthSelect">
-                    <option value="الشهر الأول">الشهر الأول</option>
-                    <option value="الشهر الثاني">الشهر الثاني</option>
-                    <option value="الشهر الثالث">الشهر الثالث</option>
-                    <option value="الشهر الرابع">الشهر الرابع</option>
-                    <option value="الشهر الخامس">الشهر الخامس</option>
-                    <option value="الشهر السادس">الشهر السادس</option>
-                    <option value="الشهر السابع">الشهر السابع</option>
-                    <option value="الشهر الثامن">الشهر الثامن</option>
-                    <option value="الشهر التاسع">الشهر التاسع</option>
-                    <option value="الشهر العاشر">الشهر العاشر</option>
-                    <option value="الشهر الحادي عشر">الشهر الحادي عشر</option>
-                    <option value="الشهر الثاني عشر">الشهر الثاني عشر</option>
-                </select>
-            </div>
-            <button class="btn" id="addMemberBtn" onclick="addMember()"><i class="fa-solid fa-circle-plus"></i> إضافة المشترك للقائمة</button>
+            <button class="btn" onclick="addMember()"><i class="fa-solid fa-plus"></i> إضافة وتوليد جدول أشهره</button>
         </div>
 
+        <!-- المشتركون والأشهر -->
         <div class="card">
-            <h2><i class="fa-solid fa-users-gear"></i> إدارة المشتركين وحالات السداد</h2>
-            <div class="search-filter">
-                <input type="text" id="searchBox" placeholder="🔍 ابحث عن اسم المشترك..." oninput="filterMembers()">
+            <h2><i class="fa-solid fa-users-rectangle"></i> جدول تتبع سداد الأشهر</h2>
+            <div class="search-box">
+                <input type="text" id="searchBox" placeholder="🔍 ابحث عن اسم المشترك..." oninput="renderUI()">
             </div>
             <div id="membersList">
-                <p style="text-align: center; color: var(--ios-text-secondary); padding: 20px;">جاري التحميل...</p>
+                <p style="text-align: center; color: var(--text-secondary); padding: 20px;">لا يوجد مشتركين بعد</p>
             </div>
         </div>
 
+        <!-- القرعة -->
         <div class="draw-box">
-            <h2><i class="fa-solid fa-trophy"></i> قرعة السلفة الشهرية</h2>
-            <p>السحب عشوائي ويشمل المشتركين المسددين فقط</p>
-            <div id="winnerDisplay">اضغط زر البدء لإجراء السحب 🎲</div>
-            <button class="btn btn-warning" onclick="startLuckyDraw()" style="background: #FF9500; color: white;"><i class="fa-solid fa-dice"></i> بدء قرعة السلفة الآن</button>
+            <h2><i class="fa-solid fa-dice"></i> قرعة السلفة العشوائية</h2>
+            <p>تختار فائزاً لم يستلم السلفة سابقاً وبشكل نزيه 100%</p>
+            <div id="winnerDisplay">اضغط للبدء بالسحب 🏆</div>
+            <button class="btn" style="background: white; color: var(--text-main); font-weight: 900;" onclick="startLuckyDraw()"><i class="fa-solid fa-trophy" style="color: var(--warning);"></i> بدء قرعة السلفة الحالية</button>
         </div>
-        
+
         <div style="text-align: center; margin-top: 20px;">
-            <button class="btn btn-danger" onclick="deleteCurrentSolfa()" style="background: #FF3B30; font-size: 13px; padding: 10px;"><i class="fa-solid fa-trash"></i> حذف هذه السلفة بالكامل من النظام</button>
+            <button class="btn btn-danger" style="font-size: 13px; padding: 14px;" onclick="deleteCurrentSolfa()"><i class="fa-solid fa-trash-can"></i> حذف هذه السلفة بالكامل</button>
         </div>
     </div>
 
-    <!-- البرمجة والاتصال بقاعدة البيانات -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, push, set, onValue, update, remove, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    <script>
+        document.getElementById('newSolfaStartDate').valueAsDate = new Date();
 
-        const firebaseConfig = {
-            databaseURL: "https://solfaapp-1dda3-default-rtdb.firebaseio.com/"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-
+        let allSolfas = JSON.parse(localStorage.getItem('promax_solfas_data') || '{}');
         let currentSolfaId = null;
-        let currentSolfaMeta = null;
-        let rawDataCache = {};
-        let activeListener = null;
+
+        // دالة تنسيق الفواصل للعملة العراقية (مثال: 3,000,000)
+        function formatCurrencyInput(input) {
+            let value = input.value.replace(/\D/g, '');
+            if (value === '') {
+                input.value = '';
+                return;
+            }
+            input.value = Number(value).toLocaleString('en-US');
+        }
+
+        function getRawNumber(val) {
+            if (!val) return 0;
+            return Number(val.toString().replace(/,/g, ''));
+        }
+
+        function saveStorage() {
+            localStorage.setItem('promax_solfas_data', JSON.stringify(allSolfas));
+        }
 
         window.showCreateScreen = function() {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -542,252 +473,213 @@
         window.showExistingSolfasScreen = function() {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById('existingScreen').classList.add('active');
-            loadAllSolfas();
+            loadSolfas();
         };
 
         window.goHome = function() {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById('homeScreen').classList.add('active');
             currentSolfaId = null;
-            if (activeListener) {
-                activeListener();
-                activeListener = null;
-            }
         };
 
-        // إنشاء سلفة جديدة مع مؤشر مرئي لمنع الشعور بالتعليق
         window.createNewSolfa = function() {
-            const nameInput = document.getElementById('newSolfaName');
-            const totalInput = document.getElementById('newSolfaTotal');
-            const installmentInput = document.getElementById('newSolfaInstallment');
-            const btn = document.getElementById('createBtn');
-
-            const name = nameInput.value.trim();
-            const total = Number(totalInput.value);
-            const installment = Number(installmentInput.value);
+            const name = document.getElementById('newSolfaName').value.trim();
+            const total = getRawNumber(document.getElementById('newSolfaTotal').value);
+            const installment = getRawNumber(document.getElementById('newSolfaInstallment').value);
+            const startDate = document.getElementById('newSolfaStartDate').value;
+            const monthsCount = Number(document.getElementById('newSolfaMonthsCount').value) || 12;
 
             if (!name) {
-                alert('الرجاء إدخال اسم السلفة');
+                alert('يرجى إدخال اسم السلفة');
                 return;
             }
 
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري الإنشاء...';
+            let start = new Date(startDate || Date.now());
+            let end = new Date(start);
+            end.setMonth(end.getMonth() + monthsCount);
 
-            const solfasRef = ref(db, 'solfas');
-            const newSolfaRef = push(solfasRef);
-            
-            set(newSolfaRef, {
+            const id = 'solfa_' + Date.now();
+            allSolfas[id] = {
                 meta: {
-                    name: name,
-                    totalAmount: total || 3000000,
-                    installment: installment || 250000
-                }
-            }).then(() => {
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fa-solid fa-check"></i> حفظ وبدء إدارة السلفة';
-                nameInput.value = '';
-                openSolfa(newSolfaRef.key, { name, totalAmount: total, installment });
-            }).catch(err => {
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fa-solid fa-check"></i> حفظ وبدء إدارة السلفة';
-                alert('خطأ في الاتصال بقاعدة البيانات. تأكد من ضبط قواعد الأمان (Rules) في Firebase: ' + err.message);
-            });
+                    name,
+                    totalAmount: total,
+                    installment,
+                    startDate: start.toISOString().split('T')[0],
+                    endDate: end.toISOString().split('T')[0],
+                    monthsCount
+                },
+                members: {}
+            };
+
+            saveStorage();
+            document.getElementById('newSolfaName').value = '';
+            openSolfa(id);
         };
 
-        // جلب السلف الموجودة
-        function loadAllSolfas() {
+        function loadSolfas() {
             const container = document.getElementById('solfasListContainer');
-            container.innerHTML = '<p style="text-align: center; color: var(--ios-text-secondary); padding: 20px;">جاري جلب السلف...</p>';
+            container.innerHTML = '';
+            const keys = Object.keys(allSolfas);
 
-            const solfasRef = ref(db, 'solfas');
-            get(solfasRef).then((snapshot) => {
-                const data = snapshot.val();
-                container.innerHTML = '';
+            if (keys.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 20px;">لا توجد سلف محفوظة حالياً.</p>';
+                return;
+            }
 
-                if (!data || Object.keys(data).length === 0) {
-                    container.innerHTML = '<p style="text-align: center; color: var(--ios-text-secondary); padding: 20px;">لا توجد سلف مسجلة حالياً. أنشئ سلفة جديدة الآن!</p>';
-                    return;
-                }
-
-                Object.keys(data).forEach(id => {
-                    const solfa = data[id];
-                    const meta = solfa.meta || { name: 'سلفة بدون اسم', totalAmount: 0, installment: 0 };
-                    const membersCount = solfa.members ? Object.keys(solfa.members).length : 0;
-
-                    const item = document.createElement('div');
-                    item.className = 'solfa-item';
-                    item.innerHTML = `
-                        <div class="solfa-info">
-                            <h4>${escapeHtml(meta.name)}</h4>
-                            <p>المبلغ الإجمالي: ${Number(meta.totalAmount).toLocaleString()} د.ع | عدد المشتركين: ${membersCount}</p>
-                        </div>
-                        <i class="fa-solid fa-chevron-left" style="color: var(--ios-primary);"></i>
-                    `;
-                    item.onclick = () => openSolfa(id, meta);
-                    container.appendChild(item);
-                });
-            }).catch(err => {
-                container.innerHTML = '<p style="text-align: center; color: var(--ios-danger); padding: 20px;">فشل تحميل السلف، تأكد من ضبط قواعد الأمان (Rules) في Firebase.</p>';
+            keys.forEach(id => {
+                const s = allSolfas[id];
+                const count = Object.keys(s.members || {}).length;
+                const item = document.createElement('div');
+                item.className = 'solfa-card-item';
+                item.innerHTML = `
+                    <div class="solfa-info">
+                        <h4>${s.meta.name}</h4>
+                        <p>البداية: ${s.meta.startDate} ⬅ النهاية: ${s.meta.endDate} | المشتركين: ${count}</p>
+                    </div>
+                    <span style="font-weight: 800; color: var(--primary);">عرض ➔</span>
+                `;
+                item.onclick = () => openSolfa(id);
+                container.appendChild(item);
             });
         }
 
-        window.openSolfa = function(id, meta) {
+        window.openSolfa = function(id) {
             currentSolfaId = id;
-            currentSolfaMeta = meta;
-
-            document.getElementById('activeSolfaTitle').textContent = meta.name;
-            document.getElementById('memberAmount').value = meta.installment || 250000;
-
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById('dashboardScreen').classList.add('active');
-
-            if (activeListener) activeListener();
-
-            const membersRef = ref(db, `solfas/${id}/members`);
-            
-            activeListener = onValue(membersRef, (snapshot) => {
-                const data = snapshot.val();
-                rawDataCache = data || {};
-                renderUI(rawDataCache, meta);
-            }, (error) => {
-                console.error(error);
-            });
+            renderUI();
         };
 
         window.addMember = function() {
-            if (!currentSolfaId) return;
-
-            const nameInput = document.getElementById('memberName');
-            const amountInput = document.getElementById('memberAmount');
-            const monthSelect = document.getElementById('monthSelect');
-            const btn = document.getElementById('addMemberBtn');
-            
-            const name = nameInput.value.trim();
-            const amount = Number(amountInput.value);
-            const month = monthSelect.value;
-
+            const input = document.getElementById('memberName');
+            const name = input.value.trim();
             if (!name) {
-                alert('الرجاء إدخال اسم المشترك');
+                alert('يرجى كتابة اسم المشترك');
                 return;
             }
 
-            btn.disabled = true;
-            const membersRef = ref(db, `solfas/${currentSolfaId}/members`);
-            const newRef = push(membersRef);
+            const solfa = allSolfas[currentSolfaId];
+            const memberId = 'm_' + Date.now();
             
-            set(newRef, {
+            let monthsData = {};
+            const count = solfa.meta.monthsCount || 12;
+            for (let i = 1; i <= count; i++) {
+                monthsData['month_' + i] = false; // افتراضياً غير مسدد
+            }
+
+            solfa.members[memberId] = {
                 name: name,
-                amount: amount || currentSolfaMeta.installment || 250000,
-                month: month,
-                status: false
-            }).then(() => {
-                btn.disabled = false;
-                nameInput.value = '';
-            }).catch(err => {
-                btn.disabled = false;
-                alert('خطأ في إضافة المشترك');
-            });
+                hasWon: false,
+                wonMonth: '',
+                months: monthsData
+            };
+
+            saveStorage();
+            input.value = '';
+            renderUI();
         };
 
-        function renderUI(data, meta) {
+        function renderUI() {
+            const solfa = allSolfas[currentSolfaId];
+            document.getElementById('activeSolfaTitle').textContent = solfa.meta.name;
+            document.getElementById('statTotalAmount').textContent = Number(solfa.meta.totalAmount).toLocaleString('en-US') + ' د.ع';
+            document.getElementById('statDateRange').textContent = `من ${solfa.meta.startDate} إلى ${solfa.meta.endDate} (${solfa.meta.monthsCount} شهراً)`;
+
+            const members = solfa.members || {};
+            const memberKeys = Object.keys(members);
+            document.getElementById('statTotalMembers').textContent = memberKeys.length;
+
             const listContainer = document.getElementById('membersList');
             listContainer.innerHTML = '';
 
-            const statTotalMembers = document.getElementById('statTotalMembers');
-            const statTotalAmount = document.getElementById('statTotalAmount');
-            const statPaidCount = document.getElementById('statPaidCount');
-            const statPercentage = document.getElementById('statPercentage');
-            const progressBar = document.getElementById('progressBar');
-
-            if (!data || Object.keys(data).length === 0) {
-                listContainer.innerHTML = '<p style="text-align: center; color: var(--ios-text-secondary); padding: 20px;">لا يوجد مشتركين في هذه السلفة بعد</p>';
-                statTotalMembers.textContent = '0';
-                statTotalAmount.textContent = Number(meta.totalAmount || 0).toLocaleString();
-                statPaidCount.textContent = '0 من 0 مسدد';
-                statPercentage.textContent = '0%';
-                progressBar.style.width = '0%';
+            if (memberKeys.length === 0) {
+                listContainer.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 20px;">لا يوجد مشتركين مضافين حتى الآن</p>';
                 return;
             }
 
-            let totalCount = 0;
-            let paidCount = 0;
-
             const searchQuery = document.getElementById('searchBox').value.toLowerCase();
 
-            Object.keys(data).forEach((key) => {
-                const m = data[key];
-                totalCount++;
-                if (m.status) paidCount++;
+            memberKeys.forEach(mId => {
+                const m = members[mId];
+                if (searchQuery && !m.name.toLowerCase().includes(searchQuery)) return;
 
-                if (searchQuery && !m.name.toLowerCase().includes(searchQuery)) {
-                    return;
+                let monthsHTML = '';
+                const count = solfa.meta.monthsCount || 12;
+                
+                for (let i = 1; i <= count; i++) {
+                    const isPaid = m.months['month_' + i];
+                    monthsHTML += `
+                        <div class="month-badge ${isPaid ? 'paid' : ''}" onclick="toggleMonth('${mId}', 'month_${i}')">
+                            ش${i} <br>${isPaid ? '✓ مسدد' : '✕ غير'}
+                        </div>
+                    `;
                 }
 
-                const itemHTML = `
-                    <div class="member-item">
-                        <div class="member-details">
-                            <h4>${escapeHtml(m.name)}</h4>
-                            <div class="meta">
-                                <span><i class="fa-regular fa-calendar"></i> ${escapeHtml(m.month)}</span>
-                                <span>•</span>
-                                <span>${Number(m.amount).toLocaleString()} د.ع</span>
-                            </div>
-                        </div>
-                        <div class="member-actions">
-                            <button class="status-badge ${m.status ? 'status-paid' : 'status-unpaid'}" onclick="toggleStatus('${key}', ${m.status})">
-                                ${m.status ? 'مسدد ✓' : 'غير مسدد ✕'}
+                const item = document.createElement('div');
+                item.className = 'member-box';
+                item.innerHTML = `
+                    <div class="member-header">
+                        <h4>👤 ${m.name}</h4>
+                        <div>
+                            <button style="background:${m.hasWon ? 'var(--primary-light)' : '#F1F5F9'}; color:${m.hasWon ? 'var(--primary)' : 'var(--text-secondary)'}; border:none; padding:6px 12px; border-radius:10px; cursor:pointer; font-size:11px; font-weight:700;" onclick="toggleWinner('${mId}')">
+                                ${m.hasWon ? '⭐ استلم' : '⚪ لم يستلم'}
                             </button>
-                            <button class="icon-btn" onclick="deleteMember('${key}')" title="حذف"><i class="fa-solid fa-trash-can"></i></button>
+                            <button style="background:var(--danger-light); color:var(--danger); border:none; padding:6px 10px; border-radius:10px; cursor:pointer; font-size:11px; font-weight:700; margin-right:4px;" onclick="deleteMember('${mId}')">حذف</button>
                         </div>
                     </div>
+                    <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 8px; font-weight:700;">انقر على الشهر لتغيير حالة السداد:</div>
+                    <div class="months-grid">
+                        ${monthsHTML}
+                    </div>
+                    ${m.hasWon ? `<div class="winner-status">🏆 استلم السلفة في (${m.wonMonth || 'محدد'})</div>` : ''}
                 `;
-                listContainer.innerHTML += itemHTML;
+                listContainer.appendChild(item);
             });
-
-            statTotalMembers.textContent = totalCount;
-            statTotalAmount.textContent = Number(meta.totalAmount || 0).toLocaleString();
-            statPaidCount.textContent = `${paidCount} من ${totalCount} مسدد`;
-            
-            const percent = totalCount > 0 ? Math.round((paidCount / totalCount) * 100) : 0;
-            statPercentage.textContent = percent + '%';
-            progressBar.style.width = percent + '%';
         }
 
-        window.filterMembers = function() {
-            renderUI(rawDataCache, currentSolfaMeta);
+        window.toggleMonth = function(mId, monthKey) {
+            const m = allSolfas[currentSolfaId].members[mId];
+            m.months[monthKey] = !m.months[monthKey];
+            saveStorage();
+            renderUI();
         };
 
-        window.toggleStatus = function(id, currentStatus) {
-            update(ref(db, `solfas/${currentSolfaId}/members/${id}`), { status: !currentStatus });
+        window.toggleWinner = function(mId) {
+            const m = allSolfas[currentSolfaId].members[mId];
+            m.hasWon = !m.hasWon;
+            if (m.hasWon) {
+                m.wonMonth = prompt('أدخل الشهر الذي استلم فيه (مثال: الشهر الأول):', 'الشهر الأول') || 'شهر محدد';
+            } else {
+                m.wonMonth = '';
+            }
+            saveStorage();
+            renderUI();
         };
 
-        window.deleteMember = function(id) {
+        window.deleteMember = function(mId) {
             if (confirm('هل أنت متأكد من حذف هذا المشترك؟')) {
-                remove(ref(db, `solfas/${currentSolfaId}/members/${id}`));
+                delete allSolfas[currentSolfaId].members[mId];
+                saveStorage();
+                renderUI();
             }
         };
 
         window.deleteCurrentSolfa = function() {
-            if (confirm('تحذير: هل أنت متأكد من حذف هذه السلفة بالكامل مع جميع المشتركين؟')) {
-                remove(ref(db, `solfas/${currentSolfaId}`)).then(() => {
-                    goHome();
-                });
+            if (confirm('هل تريد حذف هذه السلفة بالكامل؟')) {
+                delete allSolfas[currentSolfaId];
+                saveStorage();
+                goHome();
             }
         };
 
         window.startLuckyDraw = function() {
-            if (!rawDataCache || Object.keys(rawDataCache).length === 0) {
-                alert('لا يوجد مشتركين لإجراء القرعة!');
-                return;
-            }
-
-            const eligible = Object.keys(rawDataCache)
-                .map(key => ({ id: key, ...rawDataCache[key] }))
-                .filter(m => m.status === true);
+            const members = allSolfas[currentSolfaId].members || {};
+            const eligible = Object.keys(members)
+                .map(k => ({ id: k, ...members[k] }))
+                .filter(m => !m.hasWon);
 
             if (eligible.length === 0) {
-                alert('تنبيه: لا يوجد أي مشترك بحالة "مسدد" حالياً لتشملهم القرعة.');
+                alert('عذراً، جميع المشتركين استلموا السلف مسبقاً!');
                 return;
             }
 
@@ -799,20 +691,13 @@
                 winnerDisplay.textContent = randomItem.name;
                 counter++;
 
-                if (counter > 20) {
+                if (counter > 18) {
                     clearInterval(shuffle);
                     const finalWinner = eligible[Math.floor(Math.random() * eligible.length)];
-                    winnerDisplay.innerHTML = `🎉 مبروك الفائز: ${escapeHtml(finalWinner.name)}<br><span style="font-size: 13px; opacity: 0.9;">(${escapeHtml(finalWinner.month)} - ${Number(finalWinner.amount).toLocaleString()} د.ع)</span>`;
+                    winnerDisplay.innerHTML = `🎉 الفائز المحظوظ: ${finalWinner.name}! 🏆`;
                 }
             }, 80);
         };
-
-        function escapeHtml(text) {
-            if (!text) return '';
-            return text.toString().replace(/[&<>"]/g, function (m) {
-                return { '&': '&amp;', '<': '&lt;', '>', '&gt;', '"': '&quot;' }[m];
-            });
-        }
     </script>
 </body>
 </html>
