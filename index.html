@@ -3,21 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>إدارة السلف الشهرية</title>
-    <!-- خط Tajawal المتناسق مع الأيفون -->
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- أيقونات FontAwesome -->
+    <title>إدارة السلف الذكية - Pro</title>
+    <!-- خط Tajawal الفاخر -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- أيقونات FontAwesome Pro -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #007AFF;
-            --success-color: #34C759;
-            --danger-color: #FF3B30;
-            --bg-color: #F2F2F7;
-            --card-bg: #FFFFFF;
-            --text-main: #1C1C1E;
-            --text-secondary: #8E8E93;
-            --border-color: #E5E5EA;
+            --ios-bg: #F5F5F7;
+            --ios-card: #FFFFFF;
+            --ios-primary: #007AFF;
+            --ios-success: #34C759;
+            --ios-warning: #FF9500;
+            --ios-danger: #FF3B30;
+            --ios-text: #1D1D1F;
+            --ios-text-secondary: #86868B;
+            --ios-border: #E5E5EA;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+            --radius: 20px;
         }
 
         * {
@@ -29,46 +32,120 @@
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
+            background-color: var(--ios-bg);
+            color: var(--ios-text);
             padding: 16px;
             max-width: 480px;
             margin: 0 auto;
-            padding-bottom: 40px;
+            padding-bottom: 50px;
         }
 
+        /* رأس الصفحة */
         header {
-            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 20px;
-            margin-top: 10px;
+            padding: 0 4px;
         }
 
         header h1 {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--ios-text);
+            letter-spacing: -0.5px;
         }
 
-        .card {
-            background: var(--card-bg);
-            border-radius: 16px;
-            padding: 16px;
+        header span {
+            font-size: 12px;
+            background: rgba(0, 122, 255, 0.1);
+            color: var(--ios-primary);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+
+        /* لوحة الإحصائيات المالية */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
             margin-bottom: 16px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+
+        .stat-card {
+            background: var(--ios-card);
+            padding: 16px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+
+        .stat-card.full {
+            grid-column: span 2;
+        }
+
+        .stat-card h3 {
+            font-size: 13px;
+            color: var(--ios-text-secondary);
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        .stat-card .value {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--ios-text);
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            background: #EFEFF4;
+            height: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--ios-success);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 5px;
+        }
+
+        /* البطاقات العامة */
+        .card {
+            background: var(--ios-card);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0,0,0,0.02);
         }
 
         .card h2 {
-            font-size: 15px;
-            margin-bottom: 12px;
-            color: var(--primary-color);
+            font-size: 16px;
+            margin-bottom: 16px;
+            color: var(--ios-text);
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-weight: 600;
+            gap: 10px;
+            font-weight: 700;
+        }
+
+        .card h2 i {
+            color: var(--ios-primary);
+            font-size: 18px;
+        }
+
+        /* نماذج الإدخال */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 12px;
         }
 
         .form-group {
@@ -77,157 +154,192 @@
 
         input, select {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #D1D1D6;
-            border-radius: 12px;
-            font-size: 15px;
+            padding: 14px 16px;
+            border: 1px solid var(--ios-border);
+            border-radius: 14px;
+            font-size: 14px;
             outline: none;
             background: #FAFAFC;
-            color: var(--text-main);
+            color: var(--ios-text);
+            transition: all 0.2s;
         }
 
         input:focus, select:focus {
-            border-color: var(--primary-color);
+            border-color: var(--ios-primary);
             background: #FFF;
+            box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.1);
         }
 
-        button {
+        .btn {
             width: 100%;
-            padding: 13px;
-            background-color: var(--primary-color);
+            padding: 14px;
+            background-color: var(--ios-primary);
             color: white;
             border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 700;
             cursor: pointer;
-            transition: opacity 0.2s;
+            transition: transform 0.1s, opacity 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
-        button:active {
-            opacity: 0.7;
+        .btn:active {
+            transform: scale(0.98);
+            opacity: 0.9;
         }
 
-        .btn-success {
-            background-color: var(--success-color);
-        }
+        .btn-success { background-color: var(--ios-success); }
+        .btn-warning { background-color: var(--ios-warning); }
 
+        /* قائمة المشتركين الاحترافية */
         .member-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--border-color);
+            padding: 14px 0;
+            border-bottom: 1px solid var(--ios-border);
         }
 
         .member-item:last-child {
             border-bottom: none;
         }
 
-        .member-info h3 {
+        .member-details h4 {
             font-size: 15px;
-            font-weight: 600;
-            color: var(--text-main);
+            font-weight: 700;
+            color: var(--ios-text);
         }
 
-        .member-info p {
+        .member-details .meta {
             font-size: 12px;
-            color: var(--text-secondary);
-            margin-top: 2px;
+            color: var(--ios-text-secondary);
+            margin-top: 3px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .member-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .status-badge {
-            padding: 6px 12px;
+            padding: 6px 14px;
             border-radius: 20px;
             font-size: 12px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
-            user-select: none;
+            border: none;
+            transition: all 0.2s;
         }
 
         .status-paid {
             background-color: #E8F8EC;
-            color: var(--success-color);
+            color: var(--ios-success);
         }
 
         .status-unpaid {
-            background-color: #FFEEEE;
-            color: var(--danger-color);
+            background-color: #FFF0F0;
+            color: var(--ios-danger);
         }
 
-        .delete-btn {
-            color: var(--danger-color);
-            cursor: pointer;
+        .icon-btn {
+            background: none;
+            border: none;
+            color: var(--ios-text-secondary);
             font-size: 15px;
-            padding: 5px;
+            cursor: pointer;
+            padding: 6px;
+            transition: color 0.2s;
         }
 
-        #draw-section {
+        .icon-btn:hover { color: var(--ios-danger); }
+
+        /* قسم القرعة المتطور */
+        .draw-box {
             text-align: center;
+            background: linear-gradient(135deg, #007AFF 0%, #0051A8 100%);
+            color: white;
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 16px;
+            box-shadow: 0 10px 25px rgba(0, 122, 255, 0.3);
         }
 
-        #winner-display {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--success-color);
-            margin: 15px 0;
-            min-height: 35px;
-            display: flex;
-            align-items: center;
+        .draw-box h2 {
+            color: white;
             justify-content: center;
+            margin-bottom: 8px;
         }
 
-        .stats-row {
-            display: flex;
-            gap: 10px;
+        .draw-box p {
+            font-size: 13px;
+            color: rgba(255,255,255,0.8);
             margin-bottom: 16px;
         }
 
-        .stat-box {
-            flex: 1;
-            background: var(--card-bg);
-            padding: 12px;
+        #winnerDisplay {
+            font-size: 22px;
+            font-weight: 800;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 16px;
             border-radius: 14px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            margin-bottom: 16px;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
-        .stat-box h4 {
-            font-size: 12px;
-            color: var(--text-secondary);
-            margin-bottom: 4px;
-        }
-
-        .stat-box span {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--text-main);
+        .search-filter {
+            margin-bottom: 14px;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1><i class="fa-solid fa-vault"></i> صندوق السلف الشهرية</h1>
+        <h1><i class="fa-solid fa-vault" style="color: var(--ios-primary);"></i> صندوق السلف</h1>
+        <span>نسخة Pro المتقدمة</span>
     </header>
 
-    <div class="stats-row">
-        <div class="stat-box">
-            <h4>إجمالي المشتركين</h4>
-            <span id="totalMembersCount">0</span>
+    <!-- لوحة الإحصائيات -->
+    <div class="dashboard-grid">
+        <div class="stat-card">
+            <h3>إجمالي المشتركين</h3>
+            <div class="value" id="statTotalMembers">0</div>
         </div>
-        <div class="stat-box">
-            <h4>المسددين هذا الشهر</h4>
-            <span id="paidMembersCount" style="color: var(--success-color);">0</span>
+        <div class="stat-card">
+            <h3>مجموع الصندوق (د.ع)</h3>
+            <div class="value" id="statTotalAmount" style="color: var(--ios-primary);">0</div>
+        </div>
+        <div class="stat-card full">
+            <h3>نسبة سداد الاشتراكات الشهرية</h3>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
+                <span id="statPaidCount" style="font-weight: 700; font-size: 15px;">0 من 0 مسدد</span>
+                <span id="statPercentage" style="font-weight: 800; color: var(--ios-success);">0%</span>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill" id="progressBar"></div>
+            </div>
         </div>
     </div>
 
+    <!-- إضافة مشترك جديد -->
     <div class="card">
-        <h2><i class="fa-solid fa-user-plus"></i> إضافة مشترك جديد</h2>
+        <h2><i class="fa-solid fa-user-plus"></i> إضافة مشترك جديد للصندوق</h2>
         <div class="form-group">
-            <input type="text" id="memberName" placeholder="اسم المشترك (مثال: أحمد علي)">
+            <input type="text" id="memberName" placeholder="اسم المشترك الثلاثي (مثال: كرار أحمد حسين)">
         </div>
-        <div class="form-group">
+        <div class="form-row">
+            <input type="number" id="memberAmount" placeholder="مبلغ السلفة (د.ع)" value="250000">
             <select id="monthSelect">
                 <option value="الشهر الأول">الشهر الأول</option>
                 <option value="الشهر الثاني">الشهر الثاني</option>
@@ -243,24 +355,29 @@
                 <option value="الشهر الثاني عشر">الشهر الثاني عشر</option>
             </select>
         </div>
-        <button onclick="addMember()">حفظ وإضافة المشترك</button>
+        <button class="btn" onclick="addMember()"><i class="fa-solid fa-circle-plus"></i> حفظ وإضافة المشترك</button>
     </div>
 
+    <!-- قائمة المشتركين وتتبع السداد -->
     <div class="card">
-        <h2><i class="fa-solid fa-users-line"></i> قائمة المشتركين (حالة السداد)</h2>
+        <h2><i class="fa-solid fa-users-gear"></i> إدارة المشتركين وحالات السداد</h2>
+        <div class="search-filter">
+            <input type="text" id="searchBox" placeholder="🔍 ابحث عن اسم المشترك..." oninput="filterMembers()">
+        </div>
         <div id="membersList">
-            <p style="text-align: center; color: var(--text-secondary); padding: 15px 0;">جاري تحميل البيانات...</p>
+            <p style="text-align: center; color: var(--ios-text-secondary); padding: 20px;">جاري مزامنة البيانات مع Firebase...</p>
         </div>
     </div>
 
-    <div class="card" id="draw-section">
-        <h2><i class="fa-solid fa-trophy"></i> قرعة السلفة العشوائية</h2>
-        <p style="font-size: 12px; color: var(--text-secondary);">السحب يتم حصراً بين المشتركين الذين حالة سدادهم (مسدد)</p>
-        <div id="winner-display">اضغط ابدأ لإجراء القرعة 🎲</div>
-        <button class="btn-success" onclick="startLuckyDraw()">بدء السحب العشوائي</button>
+    <!-- قسم القرعة الاحترافي -->
+    <div class="draw-box">
+        <h2><i class="fa-solid fa-trophy"></i> قرعة السلفة الشهرية</h2>
+        <p>السحب عشوائي ونزيه 100% ويشمل المشتركين المسددين فقط</p>
+        <div id="winnerDisplay">اضغط زر البدء لإجراء السحب 🎲</div>
+        <button class="btn btn-warning" onclick="startLuckyDraw()" style="background: #FF9500; color: white;"><i class="fa-solid fa-dice"></i> بدء قرعة السلفة الآن</button>
     </div>
 
-    <!-- كود الجافاسكريبت المدمج بالكامل مع فايربيس -->
+    <!-- الكود البرمجي المدمج مع Firebase Realtime Database -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, push, set, onValue, update, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
@@ -273,124 +390,157 @@
         const db = getDatabase(app);
         const membersRef = ref(db, 'members');
 
-        let globalMembersList = [];
+        let rawDataCache = {};
 
+        // دالة إضافة مشترك
         window.addMember = function() {
             const nameInput = document.getElementById('memberName');
+            const amountInput = document.getElementById('memberAmount');
             const monthSelect = document.getElementById('monthSelect');
             
             const name = nameInput.value.trim();
+            const amount = Number(amountInput.value);
             const month = monthSelect.value;
 
             if (!name) {
-                alert('الرجاء إدخال اسم المشترك بشكل صحيح');
+                alert('الرجاء إدخال اسم المشترك');
                 return;
             }
 
-            const newMemberRef = push(membersRef);
-            set(newMemberRef, {
+            const newRef = push(membersRef);
+            set(newRef, {
                 name: name,
+                amount: amount || 250000,
                 month: month,
                 status: false
             }).then(() => {
                 nameInput.value = '';
-            }).catch((error) => {
-                console.error("خطأ في الإضافة:", error);
-                alert('حدث خطأ أثناء الإضافة، تأكد من الاتصال بالإنترنت.');
-            });
+            }).catch(err => alert('خطأ في الاتصال بقاعدة البيانات'));
         };
 
+        // قراءة البيانات وتحديث الواجهة لحظياً (Realtime)
         onValue(membersRef, (snapshot) => {
             const data = snapshot.val();
-            const listContainer = document.getElementById('membersList');
-            const totalCountEl = document.getElementById('totalMembersCount');
-            const paidCountEl = document.getElementById('paidMembersCount');
-            
-            listContainer.innerHTML = '';
-            globalMembersList = [];
+            rawDataCache = data || {};
+            renderUI(rawDataCache);
+        });
 
-            if (!data) {
-                listContainer.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 15px 0;">لا يوجد مشتركين مسجلين حالياً</p>';
-                totalCountEl.textContent = '0';
-                paidCountEl.textContent = '0';
+        // دالة رسم الواجهة والإحصائيات
+        function renderUI(data) {
+            const listContainer = document.getElementById('membersList');
+            listContainer.innerHTML = '';
+
+            const statTotalMembers = document.getElementById('statTotalMembers');
+            const statTotalAmount = document.getElementById('statTotalAmount');
+            const statPaidCount = document.getElementById('statPaidCount');
+            const statPercentage = document.getElementById('statPercentage');
+            const progressBar = document.getElementById('progressBar');
+
+            if (!data || Object.keys(data).length === 0) {
+                listContainer.innerHTML = '<p style="text-align: center; color: var(--ios-text-secondary); padding: 20px;">لا يوجد مشتركين مسجلين حالياً</p>';
+                statTotalMembers.textContent = '0';
+                statTotalAmount.textContent = '0';
+                statPaidCount.textContent = '0 من 0 مسدد';
+                statPercentage.textContent = '0%';
+                progressBar.style.width = '0%';
                 return;
             }
 
             let totalCount = 0;
             let paidCount = 0;
+            let totalFund = 0;
+
+            const searchQuery = document.getElementById('searchBox').value.toLowerCase();
 
             Object.keys(data).forEach((key) => {
-                const member = data[key];
-                globalMembersList.push({ id: key, ...member });
-                
+                const m = data[key];
                 totalCount++;
-                if (member.status) paidCount++;
+                totalFund += Number(m.amount || 0);
+                if (m.status) paidCount++;
 
-                const isPaid = member.status;
-                
+                // فلترة البحث
+                if (searchQuery && !m.name.toLowerCase().includes(searchQuery)) {
+                    return;
+                }
+
                 const itemHTML = `
                     <div class="member-item">
-                        <div class="member-info">
-                            <h3>${escapeHtml(member.name)}</h3>
-                            <p>${escapeHtml(member.month)}</p>
+                        <div class="member-details">
+                            <h4>${escapeHtml(m.name)}</h4>
+                            <div class="meta">
+                                <span><i class="fa-regular fa-calendar"></i> ${escapeHtml(m.month)}</span>
+                                <span>•</span>
+                                <span>${Number(m.amount).toLocaleString()} د.ع</span>
+                            </div>
                         </div>
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <span class="status-badge ${isPaid ? 'status-paid' : 'status-unpaid'}" 
-                                  onclick="toggleStatus('${key}', ${isPaid})">
-                                ${isPaid ? 'مسدد ✓' : 'لم يسدد ✕'}
-                            </span>
-                            <i class="fa-solid fa-trash-can delete-btn" onclick="deleteMember('${key}')"></i>
+                        <div class="member-actions">
+                            <button class="status-badge ${m.status ? 'status-paid' : 'status-unpaid'}" onclick="toggleStatus('${key}', ${m.status})">
+                                ${m.status ? 'مسدد ✓' : 'غير مسدد ✕'}
+                            </button>
+                            <button class="icon-btn" onclick="deleteMember('${key}')" title="حذف"><i class="fa-solid fa-trash-can"></i></button>
                         </div>
                     </div>
                 `;
                 listContainer.innerHTML += itemHTML;
             });
 
-            totalCountEl.textContent = totalCount;
-            paidCountEl.textContent = paidCount;
-        });
+            // تحديث الإحصائيات
+            statTotalMembers.textContent = totalCount;
+            statTotalAmount.textContent = totalFund.toLocaleString();
+            statPaidCount.textContent = `${paidCount} من ${totalCount} مسدد`;
+            
+            const percent = totalCount > 0 ? Math.round((paidCount / totalCount) * 100) : 0;
+            statPercentage.textContent = percent + '%';
+            progressBar.style.width = percent + '%';
+        }
 
-        window.toggleStatus = function(id, currentStatus) {
-            const memberRef = ref(db, 'members/' + id);
-            update(memberRef, {
-                status: !currentStatus
-            });
+        // فلترة البحث الفوري
+        window.filterMembers = function() {
+            renderUI(rawDataCache);
         };
 
+        // تغيير حالة السداد
+        window.toggleStatus = function(id, currentStatus) {
+            update(ref(db, 'members/' + id), { status: !currentStatus });
+        };
+
+        // حذف مشترك
         window.deleteMember = function(id) {
-            if (confirm('هل أنت متأكد من حذف هذا المشترك نهائياً؟')) {
-                const memberRef = ref(db, 'members/' + id);
-                remove(memberRef);
+            if (confirm('هل أنت متأكد من حذف هذا المشترك نهائياً من السجل؟')) {
+                remove(ref(db, 'members/' + id));
             }
         };
 
+        // نظام القرعة الاحترافي
         window.startLuckyDraw = function() {
-            if (!globalMembersList || globalMembersList.length === 0) {
+            if (!rawDataCache || Object.keys(rawDataCache).length === 0) {
                 alert('عذراً، لا يوجد مشتركين لإجراء القرعة!');
                 return;
             }
 
-            const eligibleMembers = globalMembersList.filter(m => m.status === true);
+            const eligible = Object.keys(rawDataCache)
+                .map(key => ({ id: key, ...rawDataCache[key] }))
+                .filter(m => m.status === true);
 
-            if (eligibleMembers.length === 0) {
-                alert('تنبيه: لا يوجد أي مشترك بحالة "مسدد" حالياً!');
+            if (eligible.length === 0) {
+                alert('تنبيه: لا يوجد أي مشترك بحالة "مسدد" حالياً! يرجى تحديث حالة السداد للمشتركين لتتمكن من إجراء القرعة.');
                 return;
             }
 
-            const winnerDisplay = document.getElementById('winner-display');
+            const winnerDisplay = document.getElementById('winnerDisplay');
             let counter = 0;
-            
-            let shuffleInterval = setInterval(() => {
-                const randomIndex = Math.floor(Math.random() * eligibleMembers.length);
-                winnerDisplay.textContent = eligibleMembers[randomIndex].name;
+
+            let shuffle = setInterval(() => {
+                const randomItem = eligible[Math.floor(Math.random() * eligible.length)];
+                winnerDisplay.textContent = randomItem.name;
                 counter++;
-                
-                if (counter > 18) {
-                    clearInterval(shuffleInterval);
-                    const finalWinner = eligibleMembers[Math.floor(Math.random() * eligibleMembers.length)];
-                    winnerDisplay.innerHTML = `🎉 الفائز بالسلفة هو: ${escapeHtml(finalWinner.name)} (${escapeHtml(finalWinner.month)})!`;
+
+                if (counter > 20) {
+                    clearInterval(shuffle);
+                    const finalWinner = eligible[Math.floor(Math.random() * eligible.length)];
+                    winnerDisplay.innerHTML = `🎉 مبروك للفائز: ${escapeHtml(finalWinner.name)}<br><span style="font-size: 14px; opacity: 0.9;">(${escapeHtml(finalWinner.month)} - ${Number(finalWinner.amount).toLocaleString()} د.ع)</span>`;
                 }
-            }, 90);
+            }, 80);
         };
 
         function escapeHtml(text) {
