@@ -193,6 +193,36 @@
             gap: 12px;
         }
 
+        /* صندوق المعاينة الحية الذكية */
+        .preview-box {
+            background: var(--primary-light);
+            border: 1.5px dashed var(--primary);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 18px;
+        }
+        .preview-box h4 {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .preview-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            margin-bottom: 4px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+        .preview-row span:last-child {
+            color: var(--primary);
+            font-weight: 900;
+        }
+
         .btn {
             width: 100%;
             padding: 16px;
@@ -401,23 +431,31 @@
             <div class="form-row">
                 <div class="form-group">
                     <label>المبلغ الإجمالي (د.ع)</label>
-                    <input type="text" id="newSolfaTotal" value="3,000,000" oninput="formatCurrencyInput(this)">
-                </div>
-                <div class="form-group">
-                    <label>قسط الفرد الشهري (د.ع)</label>
-                    <input type="text" id="newSolfaInstallment" value="250,000" oninput="formatCurrencyInput(this)">
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label>تاريخ البدء</label>
-                    <input type="date" id="newSolfaStartDate">
+                    <input type="text" id="newSolfaTotal" value="3,000,000" oninput="updatePreview(); formatCurrencyInput(this);">
                 </div>
                 <div class="form-group">
                     <label>عدد الأشهر (الأفراد)</label>
-                    <input type="number" id="newSolfaMonthsCount" value="12">
+                    <input type="number" id="newSolfaMonthsCount" value="12" oninput="updatePreview()">
                 </div>
             </div>
+            
+            <div class="preview-box">
+                <h4><i class="fa-solid fa-calculator"></i> المعاينة والتقدير الذكي:</h4>
+                <div class="preview-row">
+                    <span>قسط الفرد المقترح شهرياً:</span>
+                    <span id="previewInstallment">250,000 د.ع</span>
+                </div>
+                <div class="preview-row">
+                    <span>تاريخ الانتهاء المتوقع:</span>
+                    <span id="previewEndDate">-</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>تاريخ البدء</label>
+                <input type="date" id="newSolfaStartDate" onchange="updatePreview()">
+            </div>
+
             <button class="btn btn-success" onclick="createNewSolfa()"><i class="fa-solid fa-check"></i> حفظ على السحاب وبدء الصندوق</button>
         </div>
     </div>
@@ -521,10 +559,28 @@
         let currentSolfaId = null;
         let activeListener = null;
 
+        function updatePreview() {
+            const total = getRawNumber(document.getElementById('newSolfaTotal').value);
+            const monthsCount = Number(document.getElementById('newSolfaMonthsCount').value) || 12;
+            const startDateVal = document.getElementById('newSolfaStartDate').value;
+
+            const installment = monthsCount > 0 ? Math.round(total / monthsCount) : 0;
+            document.getElementById('previewInstallment').textContent = installment.toLocaleString('en-US') + ' د.ع';
+
+            let start = new Date(startDateVal || Date.now());
+            let end = new Date(start);
+            end.setMonth(end.getMonth() + monthsCount);
+
+            document.getElementById('previewEndDate').textContent = end.toISOString().split('T')[0];
+        }
+
+        setTimeout(updatePreview, 100);
+
         function formatCurrencyInput(input) {
             let value = input.value.replace(/\D/g, '');
             if (value === '') { input.value = ''; return; }
             input.value = Number(value).toLocaleString('en-US');
+            updatePreview();
         }
 
         function getRawNumber(val) {
@@ -535,6 +591,7 @@
         window.showCreateScreen = function() {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById('createScreen').classList.add('active');
+            updatePreview();
         };
 
         window.showExistingSolfasScreen = function() {
@@ -556,9 +613,9 @@
         window.createNewSolfa = function() {
             const name = document.getElementById('newSolfaName').value.trim();
             const total = getRawNumber(document.getElementById('newSolfaTotal').value);
-            const installment = getRawNumber(document.getElementById('newSolfaInstallment').value);
-            const startDate = document.getElementById('newSolfaStartDate').value;
             const monthsCount = Number(document.getElementById('newSolfaMonthsCount').value) || 12;
+            const installment = monthsCount > 0 ? Math.round(total / monthsCount) : 0;
+            const startDate = document.getElementById('newSolfaStartDate').value;
 
             if (!name) {
                 alert('يرجى إدخال اسم السلفة');
@@ -674,12 +731,11 @@
 
             document.getElementById('activeSolfaTitle').textContent = solfa.meta.name;
             document.getElementById('statTotalAmount').textContent = Number(solfa.meta.totalAmount).toLocaleString('en-US') + ' د.ع';
-            document.getElementById('statDateRange').textContent = `من ${solfa.meta.startDate} إلى ${solfa.meta.endDate} (${solfa.meta.monthsCount} شهراً)`;
+            document.getElementById('statDateRange').textContent = `من ${solfa.meta.startDate} إلى ${solfa.meta.endDate} (${solfa.meta.monthsCount} شهراً - القسط: ${Number(solfa.meta.installment).toLocaleString()} د.ع)`;
 
             const members = solfa.members || {};
             const memberKeys = Object.keys(members);
             
-            // حساب إجمالي المستلمين (من لديهم hasWon = true)
             let totalWinners = 0;
             memberKeys.forEach(mId => {
                 if (members[mId].hasWon) totalWinners++;
