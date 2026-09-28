@@ -81,12 +81,8 @@
             background-color: var(--success);
             box-shadow: 0 0 8px var(--success);
         }
-        .connection-status.online span {
-            color: var(--success);
-        }
-        .connection-status.offline span {
-            color: var(--danger);
-        }
+        .connection-status.online span { color: var(--success); }
+        .connection-status.offline span { color: var(--danger); }
 
         header {
             display: flex;
@@ -452,6 +448,10 @@
                 <div class="val" id="statTotalMembers">0</div>
             </div>
             <div class="stat-box">
+                <h3>إجمالي المستلمين</h3>
+                <div class="val" id="statTotalWinners" style="color: var(--success);">0</div>
+            </div>
+            <div class="stat-box full">
                 <h3>قيمة الصندوق الكلي</h3>
                 <div class="val" id="statTotalAmount" style="color: var(--primary);">0</div>
             </div>
@@ -492,7 +492,6 @@
     </div>
 
     <script>
-        // إعدادات فايربيس
         const firebaseConfig = {
             databaseURL: "https://solfaapp-1dda3-default-rtdb.firebaseio.com/"
         };
@@ -500,7 +499,6 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        // مراقبة مؤشر الاتصال الحقيقي بـ Firebase
         const connectedRef = db.ref(".info/connected");
         const statusEl = document.getElementById('connectionStatus');
         const statusText = document.getElementById('statusText');
@@ -555,7 +553,6 @@
             }
         };
 
-        // إنشاء سلفة جديدة وحفظها في Firebase مباشرة
         window.createNewSolfa = function() {
             const name = document.getElementById('newSolfaName').value.trim();
             const total = getRawNumber(document.getElementById('newSolfaTotal').value);
@@ -593,7 +590,6 @@
             });
         };
 
-        // جلب السلف من Firebase
         function loadSolfasFromFirebase() {
             const container = document.getElementById('solfasListContainer');
             container.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 20px;">جاري جلب السلف من السحاب...</p>';
@@ -635,7 +631,6 @@
 
             if (activeListener) activeListener.off();
 
-            // الاستماع الحي (Realtime) لتحديثات الأعضاء والأشهر فوراً
             activeListener = db.ref(`solfas/${id}`);
             activeListener.on('value', (snapshot) => {
                 const data = snapshot.val();
@@ -646,7 +641,6 @@
             });
         };
 
-        // إضافة مشترك وحفظه في Firebase
         window.addMember = function() {
             const input = document.getElementById('memberName');
             const name = input.value.trim();
@@ -684,7 +678,15 @@
 
             const members = solfa.members || {};
             const memberKeys = Object.keys(members);
+            
+            // حساب إجمالي المستلمين (من لديهم hasWon = true)
+            let totalWinners = 0;
+            memberKeys.forEach(mId => {
+                if (members[mId].hasWon) totalWinners++;
+            });
+
             document.getElementById('statTotalMembers').textContent = memberKeys.length;
+            document.getElementById('statTotalWinners').textContent = totalWinners;
 
             const listContainer = document.getElementById('membersList');
             listContainer.innerHTML = '';
@@ -749,7 +751,6 @@
             document.getElementById('dropdown_' + mId).classList.toggle('open');
         };
 
-        // تحديث حالة السداد مباشرة على Firebase
         window.toggleMonth = function(mId, monthKey) {
             const currentVal = allSolfasCache[currentSolfaId].members[mId].months[monthKey];
             db.ref(`solfas/${currentSolfaId}/members/${mId}/months/${monthKey}`).set(!currentVal).then(() => {
